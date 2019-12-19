@@ -1,0 +1,22 @@
+{
+  "name": "sendbird-calls",
+  "version": "0.6.0",
+  "authors": [
+    "SendBird <support@sendbird.com>"
+  ],
+  "homepage": "https://github.com/sendbird/sendbird-calls-javascript",
+  "description": "SendBird Calls JavaScript SDK",
+  "main": "SendBirdCall.min.js",
+  "moduleType": [],
+  "keywords": [
+    "sendbird",
+    "sendbird.com",
+    "voice",
+    "video",
+    "js"
+  ],
+  "license": "LICENSE.md",
+  "ignore": [
+    "package.json"
+  ]
+}

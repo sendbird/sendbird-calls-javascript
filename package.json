@@ -1,0 +1,26 @@
+{
+  "name": "sendbird-calls",
+  "version": "0.6.0",
+  "description": "SendBird Calls JavaScript SDK",
+  "main": "SendBirdCall.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sendbird/sendbird-calls-javascript"
+  },
+  "keywords": [
+    "sendbird",
+    "sendbird.com",
+    "voice",
+    "video",
+    "js"
+  ],
+  "author": "SendBird <support@sendbird.com>",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/sendbird/sendbird-calls-javascript/issues"
+  },
+  "homepage": "https://sendbird.com"
+}
