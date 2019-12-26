@@ -24,6 +24,21 @@ npm install sendbird-calls
 yarn add sendbird-calls 
 ```
 
+Import as es6 module
+```
+import SendBirdCall from "sendbird-calls";
+
+SendBirdCall.init(YOUR_APP_ID)
+```
+or include in header as global variable
+```
+<script type="text/javascript"> src="SendBirdCall.min.js"></script>
+<script type="text/javascript">
+  SendBirdCall.init(YOUR_APP_ID)
+</script>
+```
+
+
 ## Audio Permissions
 If user dial or accept for the first time in the given domain, browser prompts for permission to use microphone.
 
