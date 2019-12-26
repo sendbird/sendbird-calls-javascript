@@ -32,7 +32,7 @@ SendBirdCall.init(YOUR_APP_ID)
 ```
 or include in header as global variable
 ```
-<script type="text/javascript"> src="SendBirdCall.min.js"></script>
+<script type="text/javascript" src="SendBirdCall.min.js"></script>
 <script type="text/javascript">
   SendBirdCall.init(YOUR_APP_ID)
 </script>
