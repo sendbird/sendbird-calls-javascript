@@ -1,6 +1,6 @@
 {
   "name": "sendbird-calls",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "SendBird Calls JavaScript SDK",
   "main": "SendBirdCall.min.js",
   "scripts": {
