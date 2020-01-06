@@ -25,16 +25,16 @@ yarn add sendbird-calls
 ```
 
 Import as es6 module
-```
+```javascript
 import SendBirdCall from "sendbird-calls";
 
-SendBirdCall.init(YOUR_APP_ID)
+SendBirdCall.init(APP_ID)
 ```
 or include in header as global variable
-```
+```html
 <script type="text/javascript" src="SendBirdCall.min.js"></script>
 <script type="text/javascript">
-  SendBirdCall.init(YOUR_APP_ID)
+  SendBirdCall.init(APP_ID)
 </script>
 ```
 
@@ -122,10 +122,12 @@ Initiate a call by providing the callee’s user id into the `SendBirdCall.dial(
 ```javascript
 /*
 interface DirectCallOption {
+  remoteVideoView: HTMLElement
   audioEnabled: boolean
 }
 */
 const callOption = {
+  remoteVideoView: document.getElementById('AUDIO_TAG'),
   audioEnabled: true
 };
 
@@ -150,6 +152,20 @@ call.onEnded = (call) => {
 
 call.onRemoteAudioEnabled = (call) => {
   ...
+};
+```
+
+`remoteVideoView` option is necessary to play media stream. You have to append `<audio>` HTML tag to your page, and pass it to `callOption` to preform a audio call properly.
+
+In `HTML`,
+```html
+<audio id="remote_audio_tag" autoplay>
+```
+In `JavaScript`,
+```javascript
+const callOption = {
+  remoteVideoView: document.getElementById('remote_audio_tag'),
+  audioEnabled: true
 };
 ```
 
@@ -181,10 +197,12 @@ SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
 
     /*
     interface DirectCallOption {
+      remoteVideoView: HTMLElement
       audioEnabled: boolean
     }
     */
     const callOption = {
+      remoteVideoView: document.getElementById('AUDIO_TAG'),
       audioEnabled: true
     };
 
