@@ -122,12 +122,12 @@ Initiate a call by providing the callee’s user id into the `SendBirdCall.dial(
 ```javascript
 /*
 interface DirectCallOption {
-  remoteVideoView: HTMLElement
+  remoteMediaView: HTMLElement
   audioEnabled: boolean
 }
 */
 const callOption = {
-  remoteVideoView: document.getElementById('AUDIO_TAG'),
+  remoteMediaView: document.getElementById('remote_audio_tag'),
   audioEnabled: true
 };
 
@@ -155,7 +155,7 @@ call.onRemoteAudioEnabled = (call) => {
 };
 ```
 
-`remoteVideoView` option is necessary to play media stream. You have to append `<audio>` HTML tag to your page, and pass it to `callOption` to preform a audio call properly.
+`remoteMediaView` option is necessary to play media stream. You should append `<audio>` HTML tag in your page, and pass it to `callOption` to preform a audio call properly.
 
 In `HTML`,
 ```html
@@ -164,7 +164,7 @@ In `HTML`,
 In `JavaScript`,
 ```javascript
 const callOption = {
-  remoteVideoView: document.getElementById('remote_audio_tag'),
+  remoteMediaView: document.getElementById('remote_audio_tag'),
   audioEnabled: true
 };
 ```
@@ -197,12 +197,12 @@ SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
 
     /*
     interface DirectCallOption {
-      remoteVideoView: HTMLElement
+      remoteMediaView: HTMLElement
       audioEnabled: boolean
     }
     */
     const callOption = {
-      remoteVideoView: document.getElementById('AUDIO_TAG'),
+      remoteMediaView: document.getElementById('remote_audio_tag'),
       audioEnabled: true
     };
 
@@ -246,6 +246,14 @@ call.end();
 call.onEnded = (call) => {
   // Consider releasing or destroying call-related view from here.
 };
+```
+
+## Deauthenticate a user
+You can deauthenticate the user with `SendBirdCall.deauthenticate()` method. it will discard all current directCalls, session keys, and user information; except for [SendBirdCallListener](#SendBirdCallListener). `SendBirdCall.deauthenticate()` can be used as 'logout' method for current user.
+
+```javascript
+// Deauthenticate
+SendBirdCall.deauthenticate();
 ```
 
 ## Retrieve a call information
