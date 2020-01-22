@@ -1,0 +1,28 @@
+#!/bin/bash
+
+
+PCK_VERSION=$(cat package.json | jq '.version')
+LOCK_VERSION=$(cat package-lock.json | jq '.version')
+SCRIPT_VERSION=\"$(sed -n 3p SendBirdCall.min.js | awk '{print $6}' | awk -F v '{print $2}')\"
+SCRIPT_ENV=$(sed -n 3p SendBirdCall.min.js | awk '{print $7}')
+
+if [[ ! (($PCK_VERSION == $LOCK_VERSION) && ($PCK_VERSION == $SCRIPT_VERSION)) ]]
+then
+echo -e "\033[0;31m\
+Error: Version in package.json, package-lock.json and SendBirdCall.min.js does not match\
+\033[0m"
+
+exit 1
+fi
+
+if [[ ! $SCRIPT_ENV == 'production' ]]
+then
+echo -e "\033[0;31m\
+Error: Script is not built for production\
+\033[0m"
+
+exit 1
+fi
+
+
+exit 0
