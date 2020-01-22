@@ -3,13 +3,14 @@
 
 PCK_VERSION=$(cat package.json | jq '.version')
 LOCK_VERSION=$(cat package-lock.json | jq '.version')
+BOWER_VERSION=$(cat bower.json | jq '.version')
 SCRIPT_VERSION=\"$(sed -n 3p SendBirdCall.min.js | awk '{print $6}' | awk -F v '{print $2}')\"
 SCRIPT_ENV=$(sed -n 3p SendBirdCall.min.js | awk '{print $7}')
 
-if [[ ! (($PCK_VERSION == $LOCK_VERSION) && ($PCK_VERSION == $SCRIPT_VERSION)) ]]
+if [[ ! (($PCK_VERSION == $LOCK_VERSION) && ($PCK_VERSION == $SCRIPT_VERSION) && ($PCK_VERSION == $BOWER_VERSION)) ]]
 then
 echo -e "\033[0;31m\
-Error: Version in package.json, package-lock.json and SendBirdCall.min.js does not match\
+Error: Version in package.json, package-lock.json, bower.json and SendBirdCall.min.js does not match\
 \033[0m"
 
 exit 1
