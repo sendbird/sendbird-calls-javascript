@@ -5,19 +5,22 @@ PCK_VERSION=$(cat package.json | jq '.version')
 LOCK_VERSION=$(cat package-lock.json | jq '.version')
 BOWER_VERSION=$(cat bower.json | jq '.version')
 SCRIPT_VERSION=\"$(sed -n 3p SendBirdCall.min.js | awk '{print $6}' | awk -F v '{print $2}')\"
-TYPESCRIPT_VERSION=$(sed -n 1p SendBirdCall.min.d.ts | awk '{print $2}')
+TYPESCRIPT_VERSION=\"$(sed -n 1p SendBirdCall.min.d.ts | awk '{print $2}')\"
 SCRIPT_ENV=$(sed -n 3p SendBirdCall.min.js | awk '{print $7}')
 
 if [[ ! (($PCK_VERSION == $LOCK_VERSION) &&\
-  ($PCK_VERSION == $SCRIPT_VERSION) && \
-  ($PCK_VERSION == $BOWER_VERSION)) && \
-  ($PCK_VERSION == $TYPESCRIPT_VERSION)) && \
-   ]]
+  ($PCK_VERSION == $SCRIPT_VERSION) &&\
+  ($PCK_VERSION == $BOWER_VERSION) &&\
+  ($PCK_VERSION == $TYPESCRIPT_VERSION)) ]]
 then
 echo -e "\033[0;31m\
 Error: Version in package.json, package-lock.json, bower.json, SendBirdCall.min.js and SendBirdCall.min.d.ts does not match\
 \033[0m"
-
+echo $PCK_VERSION
+echo $LOCK_VERSION
+echo $BOWER_VERSION
+echo $SCRIPT_VERSION
+echo $TYPESCRIPT_VERSION
 exit 1
 fi
 
