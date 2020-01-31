@@ -1,8 +1,9 @@
 {
   "name": "sendbird-calls",
-  "version": "0.6.6",
+  "version": "0.6.10",
   "description": "SendBird Calls JavaScript SDK",
   "main": "SendBirdCall.min.js",
+  "types": "SendBirdCall.min.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
