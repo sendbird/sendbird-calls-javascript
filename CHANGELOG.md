@@ -21,3 +21,15 @@
     * `callOption.localVideoView` and `callOption.remoteVideoView` is now deprecated.
     * `localVideoView` -> `localMediaView`
     * `remoteVideoView` -> `remoteMediaView`
+
+### 0.6.4 (Jan 2, 2020)
+* Fixed call.getDuration()
+
+### 0.6.3 (Dec 26, 2019)
+* Fixed connection for FireFox, exported LoggerLevel enum
+
+### 0.6.2 (Dec 20, 2019)
+* Fixed logger, polyfill
+
+### 0.6.1 (Dec 20, 2019)
+* Removed core-js dependency
