@@ -1,4 +1,4 @@
-/** 0.6.10 */
+/** 0.7.0 */
 
 export as namespace SendBirdCall;
 
@@ -9,13 +9,34 @@ export function connectWebSocket(): Promise<void>;
 export function addListener(id: string, listener: SendBirdCallListener): void;
 export function removeListener(id: string): void;
 export function removeAllListeners(): void;
-export function dial(userId: string, isVideoCall: false, callOption: DirectCallOption, callback?: DialHandler): DirectCall;
+export function dial(userId: string, isVideoCall: boolean, callOption: DirectCallOption, callback?: DialHandler): DirectCall;
+export function dial(params: DialParams, callback?: DialHandler): DirectCall;
 export function createDirectCallLogListQuery(params?: DirectCallLogListQueryParams): DirectCallLogListQuery;
+export function getCurrentAudioInputDevice(): MediaDeviceInfo;
+export function getAvailableAudioInputDevices(): MediaDeviceInfo[];
+export function selectAudioInputDevice(mediaDeviceInfo: MediaDeviceInfo): void;
+export function getCurrentAudioOutputDevice(): MediaDeviceInfo;
+export function getAvailableAudioOutputDevices(): MediaDeviceInfo[];
+export function selectAudioOutputDevice(mediaDeviceInfo: MediaDeviceInfo): void;
+export function updateCustomItems(callId: string, customItems: CustomItems, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
+export function deleteCustomItems(callId: string, customItemKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>;
+export function deleteAllCustomItems(callId: string, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function setLoggerLevel(level: LoggerLevel);
 export function getCall(callId: string): DirectCall;
 export const sdkVersion: string;
 export const appId: string;
 export const currentUser: User;
+
+export interface DialParams {
+  userId: string;
+  isVideoCall: boolean;
+  callOption: DirectCallOption;
+  customItems?: CustomItems;
+}
+
+export interface AcceptParams {
+  callOption: DirectCallOption;
+}
 
 export enum LoggerLevel {
   NONE = 'NONE',
@@ -42,15 +63,21 @@ export enum DirectCallEndResult {
 
 export interface SendBirdCallListener {
   onRinging: ((directCall: DirectCall) => void) | null;
+  onAudioInputDeviceChanged: ((currentAudioInputDevice: MediaDeviceInfo, availableAudioInputDevices: MediaDeviceInfo[]) => void)  | null;
+  onAudioOutputDeviceChanged: ((currentAudioOutputDevice: MediaDeviceInfo, availableAudioOutputDevices: MediaDeviceInfo[]) => void)  | null;
 }
 
 export interface DirectCall {
   onEstablished: ((call: DirectCall) => void) | null;
   onConnected: ((call: DirectCall) => void) | null;
+  onReconnected: ((call: DirectCall) => void) | null;
+  onReconnecting: ((call: DirectCall) => void) | null;
 
   //deprecated
   onRemoteAudioEnabled: ((call: DirectCall) => void) | null;
   onRemoteAudioSettingsChanged: ((call: DirectCall) => void) | null;
+  onCustomItemsUpdated: ((call: DirectCall, updatedKeys: string[]) => void) | null;
+  onCustomItemsDeleted: ((call: DirectCall, deletedKeys: string[]) => void) | null;
   onEnded: ((call: DirectCall) => void) | null;
 
   readonly caller: DirectCallUser;
@@ -63,9 +90,11 @@ export interface DirectCall {
   readonly myRole: DirectCallUserRole;
   readonly endedBy: DirectCallUser;
   readonly endResult: DirectCallEndResult;
+  readonly customItems: CustomItems;
 
   getDuration(): number;
-  accept(callOptions: DirectCallOption): void;
+  accept(callOption: DirectCallOption): void;
+  accept(params: AcceptParams): void;
   end(): void;
 
   //deprecated
@@ -76,6 +105,10 @@ export interface DirectCall {
 
   muteMicrophone(): void;
   unmuteMicrophone(): void;
+
+  updateCustomItems(customItems: CustomItems, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
+  deleteCustomItems(customItemsKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>;
+  deleteAllCustomItems(callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 }
 
 export interface DirectCallOption {
@@ -107,6 +140,7 @@ export interface DirectCallLog {
   readonly duration: number;
   readonly endResult: DirectCallEndResult;
   readonly isVideoCall: boolean;
+  readonly customItems: CustomItems;
 }
 
 export interface DirectCallUser {
@@ -126,6 +160,11 @@ export interface AuthOption {
 export type AuthHandler = (user?: User, error?: Error) => void;
 export type DialHandler = (call?: DirectCall, error?: Error) => void;
 export type CompletionHandler = (error?: Error) => void;
+export type CustomItemsHandler = (result?: CustomItemsResult, error?: Error) => void;
+export interface CustomItemsResult {
+  readonly customItems: CustomItems;
+  readonly affectedKeys: string[];
+}
 
 export interface User {
   readonly userId: string;
@@ -139,4 +178,8 @@ export interface DirectCallLogListQueryParams {
   myRole?: DirectCallUserRole;
   endResults?: DirectCallEndResult[];
   limit?: number;
+}
+
+export interface CustomItems {
+  [key: string]: string;
 }
