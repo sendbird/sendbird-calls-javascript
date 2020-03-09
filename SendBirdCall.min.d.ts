@@ -1,4 +1,4 @@
-/** 0.7.0 */
+/** 0.8.0 */
 
 export as namespace SendBirdCall;
 
@@ -13,11 +13,11 @@ export function dial(userId: string, isVideoCall: boolean, callOption: DirectCal
 export function dial(params: DialParams, callback?: DialHandler): DirectCall;
 export function createDirectCallLogListQuery(params?: DirectCallLogListQueryParams): DirectCallLogListQuery;
 export function getCurrentAudioInputDevice(): MediaDeviceInfo;
-export function getAvailableAudioInputDevices(): MediaDeviceInfo[];
-export function selectAudioInputDevice(mediaDeviceInfo: MediaDeviceInfo): void;
+export function getAvailableAudioInputDevices(): Promise<MediaDeviceInfo[]>;
+export function selectAudioInputDevice(mediaDeviceInfo: MediaDeviceInfo): Promise<void>;
 export function getCurrentAudioOutputDevice(): MediaDeviceInfo;
-export function getAvailableAudioOutputDevices(): MediaDeviceInfo[];
-export function selectAudioOutputDevice(mediaDeviceInfo: MediaDeviceInfo): void;
+export function getAvailableAudioOutputDevices(): Promise<MediaDeviceInfo[]>;
+export function selectAudioOutputDevice(mediaDeviceInfo: MediaDeviceInfo): Promise<void>;
 export function updateCustomItems(callId: string, customItems: CustomItems, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function deleteCustomItems(callId: string, customItemKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function deleteAllCustomItems(callId: string, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
@@ -63,8 +63,8 @@ export enum DirectCallEndResult {
 
 export interface SendBirdCallListener {
   onRinging: ((directCall: DirectCall) => void) | null;
-  onAudioInputDeviceChanged: ((currentAudioInputDevice: MediaDeviceInfo, availableAudioInputDevices: MediaDeviceInfo[]) => void)  | null;
-  onAudioOutputDeviceChanged: ((currentAudioOutputDevice: MediaDeviceInfo, availableAudioOutputDevices: MediaDeviceInfo[]) => void)  | null;
+  onAudioInputDeviceChanged: ((currentAudioInputDevice: MediaDeviceInfo, availableAudioInputDevices: MediaDeviceInfo[]) => void) | null;
+  onAudioOutputDeviceChanged: ((currentAudioOutputDevice: MediaDeviceInfo, availableAudioOutputDevices: MediaDeviceInfo[]) => void) | null;
 }
 
 export interface DirectCall {
@@ -76,6 +76,7 @@ export interface DirectCall {
   //deprecated
   onRemoteAudioEnabled: ((call: DirectCall) => void) | null;
   onRemoteAudioSettingsChanged: ((call: DirectCall) => void) | null;
+  onRemoteVideoSettingsChanged: ((call: DirectCall) => void) | null;
   onCustomItemsUpdated: ((call: DirectCall, updatedKeys: string[]) => void) | null;
   onCustomItemsDeleted: ((call: DirectCall, deletedKeys: string[]) => void) | null;
   onEnded: ((call: DirectCall) => void) | null;
@@ -87,10 +88,20 @@ export interface DirectCall {
   readonly remoteUser: DirectCallUser;
   readonly isLocalAudioEnabled: boolean;
   readonly isRemoteAudioEnabled: boolean;
+  readonly isLocalVideoEnabled: boolean;
+  readonly isRemoteVideoEnabled: boolean;
   readonly myRole: DirectCallUserRole;
   readonly endedBy: DirectCallUser;
   readonly endResult: DirectCallEndResult;
   readonly customItems: CustomItems;
+  readonly localMediaView: HTMLMediaElement;
+  readonly remoteMediaView: HTMLMediaElement;
+
+  setLocalMediaView(): Promise<void>;
+  setRemoteMediaView(): Promise<void>;
+
+  stopVideo(): void;
+  startVideo(): void;
 
   getDuration(): number;
   accept(callOption: DirectCallOption): void;
@@ -112,11 +123,12 @@ export interface DirectCall {
 }
 
 export interface DirectCallOption {
-  localMediaView?: HTMLAudioElement | HTMLVideoElement;
-  remoteMediaView?: HTMLAudioElement | HTMLVideoElement;
-  localVideoView?: HTMLAudioElement | HTMLVideoElement;
-  remoteVideoView?: HTMLAudioElement | HTMLVideoElement;
+  localMediaView?: HTMLMediaElement;
+  remoteMediaView?: HTMLMediaElement;
+  localVideoView?: HTMLMediaElement;
+  remoteVideoView?: HTMLMediaElement;
   audioEnabled?: boolean;
+  videoEnabled?: boolean;
 }
 
 declare const DirectCallOption: {

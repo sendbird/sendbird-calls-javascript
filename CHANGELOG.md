@@ -1,5 +1,32 @@
 # Change Log
 
+### 0.8.0 (Mar 9, 2020)
+* Interface for video call has been implemented
+    * Below properties are added in `DirectCall`
+        * `readonly isLocalVideoEnabled: boolean`
+        * `readonly isRemoteVideoEnabled: boolean`
+        * `readonly localMediaView: HTMLMediaElement`
+        * `readonly remoteMediaView: HTMLMediaElement`
+
+    * Below methods are added in `DirectCall`
+        * `setLocalMediaView(): Promise<void>`
+        * `setRemoteMediaView(): Promise<void>`
+        * `stopVideo(): void`
+        * `startVideo(): void`
+
+    * Below implementable event listeners are added in `DirectCall`
+        * `onRemoteVideoSettingsChanged: ((call: DirectCall) => void) | null`
+    
+    * Below property is added in `DirectCallOption`
+        * `videoEnabled?: boolean`
+
+* Wrong type definitions have been fixed
+    * Type definitions for below methods in class `SendBirdCall` has been fixed.
+        * `getAvailableAudioInputDevices(): MediaDeviceInfo[]` -> `getAvailableAudioInputDevices(): Promise<MediaDeviceInfo[]>`
+        * `selectAudioInputDevice(mediaDeviceInfo: MediaDeviceInfo): void` -> `selectAudioInputDevice(mediaDeviceInfo: MediaDeviceInfo): Promise<void>`
+        * `getAvailableAudioOutputDevices(): MediaDeviceInfo[]` -> `getAvailableAudioOutputDevices(): Promise<MediaDeviceInfo[]>`
+        * `selectAudioOutputDevice(mediaDeviceInfo: MediaDeviceInfo): void` -> `selectAudioOutputDevice(mediaDeviceInfo: MediaDeviceInfo): Promise<void>`
+
 ### 0.7.0 (Feb 21, 2020)
 * Selecting an audio input / output device is implemented.
     * Below methods are added in `SendBirdCall`
