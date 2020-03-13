@@ -1,4 +1,4 @@
-/** 0.8.0 */
+/** 0.8.1 */
 
 export as namespace SendBirdCall;
 
@@ -81,6 +81,7 @@ export interface DirectCall {
   onCustomItemsDeleted: ((call: DirectCall, deletedKeys: string[]) => void) | null;
   onEnded: ((call: DirectCall) => void) | null;
 
+  readonly callId: string;
   readonly caller: DirectCallUser;
   readonly callee: DirectCallUser;
   readonly isVideoCall: boolean;
@@ -92,6 +93,7 @@ export interface DirectCall {
   readonly isRemoteVideoEnabled: boolean;
   readonly myRole: DirectCallUserRole;
   readonly endedBy: DirectCallUser;
+  readonly isEnded: boolean;
   readonly endResult: DirectCallEndResult;
   readonly customItems: CustomItems;
   readonly localMediaView: HTMLMediaElement;

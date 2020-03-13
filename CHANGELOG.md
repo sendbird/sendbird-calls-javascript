@@ -1,4 +1,10 @@
 # Change Log
+### 0.8.1 (Mar 13, 2020)
+* Bug fix
+    * Fixed error when user accepted call without specifying localMediaView
+* Below properties are added in `DirectCall`
+    * `readonly callId: string`
+    * `readonly isEnded: boolean`
 
 ### 0.8.0 (Mar 9, 2020)
 * Interface for video call has been implemented
