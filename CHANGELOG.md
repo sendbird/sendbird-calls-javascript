@@ -1,4 +1,6 @@
 # Change Log
+### 0.9.0 (Mar 18, 2020)
+* Internal improvement
 ### 0.8.1 (Mar 13, 2020)
 * Bug fix
     * Fixed error when user accepted call without specifying localMediaView
@@ -22,7 +24,7 @@
 
     * Below implementable event listeners are added in `DirectCall`
         * `onRemoteVideoSettingsChanged: ((call: DirectCall) => void) | null`
-    
+
     * Below property is added in `DirectCallOption`
         * `videoEnabled?: boolean`
 
