@@ -57,7 +57,9 @@ SendBirdCall.init(APP_ID);
 In order to make and receive calls, users must first be authenticated on the SendBird server using the  `SendBirdCall.authenticate()` function. The `SendBirdCall` object must then be connected to the websocket server using `SendBirdCall.connectWebSocket()` method.
 ```javascript
 // Authentication
-SendBirdCall.authenticate({ USER_ID, ACCESS_TOKEN }, (res, error) => {
+const authOption = { userId: USER_ID, accessToken: ACCESS_TOKEN };
+
+SendBirdCall.authenticate(authOption, (res, error) => {
   if (error) {
     // auth failed
   } else {
@@ -80,6 +82,15 @@ Register a device-specific event handler using the `SendBirdCall.addListener()` 
 SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
   onRinging: (call) => {
     ...
+  },
+  onAudioInputDeviceChanged: (currentDevice, availableDevices) => {
+    ...
+  },
+  onAudioOutputDeviceChanged: (currentDevice, availableDevices) => {
+    ...
+  },
+  onVideoInputDeviceChanged: (currentDevice, availableDevices) => {
+    ...
   }
 });
 ```
@@ -89,6 +100,9 @@ SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
 | Method        | Description                                                      |
 |---------------|------------------------------------------------------------------|
 |onRinging()    | Incoming calls are received on the callee’s device. |
+|onAudioInputDeviceChanged() | Audio input devices have changed. |
+|onAudioOutputDeviceChanged() | Audio output devices have changed. |
+|onVideoInputDeviceChanged() | Video input devices have changed. |
 
 ### Call-specific Listener
 Register a call-specific event handler by attaching an event handler function directly to the properties of the call object. Responding to call-specific events (e.g. sucessfull call connection) is then handled as shown below:
@@ -143,8 +157,6 @@ call.onCustomItemsDeleted = (call, deletedKeys) => {
 | onCustomItemsDeleted         | One or more of `call`’s custom items (metadata) have been deleted. |
 | onReconnecting               | `call` started attempting to reconnect to the other party after a media connection disruption. |
 | onReconnected                | The disrupted media connection reconnected. |
-| onAudioDeviceChanged         | The audio device used in the call has changed. |
-| onVideoDeviceChanged         | The video device used in the call has changed. |
 
 
 ## Make a call
@@ -157,7 +169,7 @@ const dialParams = {
     localMediaView: document.getElementById('local_video_element_id'),
     remoteMediaView: document.getElementById('remote_video_element_id')
   }
-}
+};
 
 const call = SendBirdCall.dial(dialParams, (call, error) => {
     if (error) {
@@ -183,7 +195,7 @@ call.onRemoteAudioEnabled = (call) => {
 };
 ```
 
-The media vieweris set using `call.setLocalMediaView(element)` or `call.setRemoteMediaView(element)`.  The `remoteMediaView` DOM element is required for the remote media stream to be displayed. Setting this element’s `autoplay` property to `true` is also recommended.
+The media viewers set using `call.setLocalMediaView(element)` or `call.setRemoteMediaView(element)`.  The `remoteMediaView` DOM element is required for the remote media stream to be displayed. Setting this element’s `autoplay` property to `true` is also recommended.
 
 ```html
 <video id="remote_video_element_id" autoplay>
@@ -235,7 +247,7 @@ Incoming calls are received via the application's persistent internal server con
 In the event of accidental disconnection, the application will attempt to reconnect every 2 seconds.
 
 ## Handle a current call
-During an ongoing call, mute or unmute the caller’s microphone using the `call.muteMicrophone()` or `call.unmuteMicrophone()` methods. If the callee changes their audio settings, the caller is notified via the `call.onRemoteAudioSettingsChanged()` listener. The caller may start or stop video using the `call.startVideo()` or `call.stopVideo()` methods. If the callee changes their video settings, the caller is notified via the `call.onRemoteVideoSettingsChanged()` listener. Switching between the front and the back cameras is done using `call.switchCamera(CompletionHandler)`.
+During an ongoing call, mute or unmute the caller’s microphone using the `call.muteMicrophone()` or `call.unmuteMicrophone()` methods. If the callee changes their audio settings, the caller is notified via the `call.onRemoteAudioSettingsChanged()` listener. The caller may start or stop video using the `call.startVideo()` or `call.stopVideo()` methods. If the callee changes their video settings, the caller is notified via the `call.onRemoteVideoSettingsChanged()` listener.
 
 ```javascript
 // mute my microphone
@@ -250,7 +262,7 @@ call.startVideo();
 // stops showing video
 call.stopVideo();
 
-// receives the event
+// receives the audio event
 call.onRemoteAudioSettingsChanged = (call) => {
   if (call.isRemoteAudioEnabled) {
     // The peer has been muted.
@@ -259,7 +271,16 @@ call.onRemoteAudioSettingsChanged = (call) => {
     // The peer has been muted.
     // Consider displaying and toggling a muted icon.
   }
-}
+};
+
+// receives the video event
+call.onRemoteVideoSettingsChanged = (call) => {
+  if (call.isRemoteVideoEnabled) {
+    // The peer has stopped the video.
+  } else {
+    // The peer has started the video.
+  }
+};
 ```
 
 ## End a call
