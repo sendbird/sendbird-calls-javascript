@@ -1,13 +1,18 @@
 # SendBird Calls for JavaScript
 
+
+[![minified size](https://img.shields.io/bundlephobia/min/sendbird-calls)](https://img.shields.io/bundlephobia/min/sendbird-calls)
+[![npm version](https://badge.fury.io/js/sendbird-calls.svg)](https://badge.fury.io/js/sendbird-calls)
+[![Commercial License](https://img.shields.io/badge/license-Commercial-brightgreen.svg)](https://github.com/sendbird/sendbird-calls-javascript/blob/master/LICENSE.md)
+
 ## Introduction
-`SendBird Calls` is the newest addition to our product portfolio. It enables real-time calls between users within your SendBird application. SDKs are provided for iOS, Android, and JavaScript. Using any one of these, developers can quickly integrate voice and video call functions into their own client apps allowing users to make and receive web-based real-time voice and video calls on the SendBird platform.
+`SendBird Calls` is the latest addition to our product portfolio. It enables real-time calls between users within a SendBird application. SDKs are provided for iOS, Android, and JavaScript. Using any one of these, developers can quickly integrate voice and video call functions into their own client apps, allowing users to make and receive web-based real-time voice and video calls on the SendBird platform.
 
 ## Functional Overview
-The SendBird Calls JavaScript SDK provides a framework to make and receive voice and video calls. "Direct calls" in the SDK refers to one-to-one calls, similar to that of the "direct messages" (DMs) in messaging services. To make a direct voice or video call, the caller specifies the user ID of the intended callee, and dials. Upon dialing, all of the callee’s authenticated devices will receive incoming call notifications. The callee then can choose to accept the call from any one of the devices. When the call is accepted, a connection is established between the caller and the callee. This marks the start of the direct call. Call participants may mute themselves, as well as select the audio and video hardware used in the call. Calls may be ended by either party. The SendBird Dashboard provides all call logs in the Calls menu for admins to review.
+The SendBird Calls JavaScript SDK provides a framework to make and receive voice and video calls. “Direct calls” in the SDK refers to one-to-one calls, comparable to “direct messages” (DMs) in messaging services. To make a direct voice or video call, the caller specifies the user ID of the intended callee, and dials. Upon dialing, all of the callee’s authenticated devices will receive incoming call notifications. The callee then can choose to accept the call from any one of the devices. When the call is accepted, a connection is established between the caller and the callee. This marks the start of the direct call. Call participants may mute themselves, as well as select the audio and video hardware used in the call. Calls may be ended by either party. The SendBird Dashboard displays call logs in the Calls menu for application owners and admins to review.
 
 ## SDK Prerequisites
-* Modern browsers implementing WebRTC APIs are supported; IE isn't supported.
+* Modern browsers implementing WebRTC APIs are supported; IE is not.
 * Edge is not supported, though it might be supported later.
 
 ```javascript
@@ -25,13 +30,13 @@ npm install sendbird-calls
 yarn add sendbird-calls 
 ```
 
-Import as es6 module
+Import `SendBirdCall` as an es6 module
 ```javascript
 import SendBirdCall from "sendbird-calls";
 
 SendBirdCall.init(APP_ID)
 ```
-or include in header as global variable
+Or use the minified file to initialize `SendBirdCall` as global variable in the header 
 ```html
 <script type="text/javascript" src="SendBirdCall.min.js"></script>
 <script type="text/javascript">
@@ -39,18 +44,17 @@ or include in header as global variable
 </script>
 ```
 
-
 ## Acquiring Media Device Permissions
-If user dials or accepts for the first time in the given website, the browser may prompts for permission to use microphone and camera. It also might happens when user calls `SendBirdCall.useMedia()`. Without appropriate permissions allowed, user might not be able to access media devices, which includes retrieving list of available media devices or retrieving media stream from those devices.
+When a user makes or receives a call for the first time on a given website, the browser will prompt the user to grant microphone and camera access permissions.  This might also occur when the `SendBirdCall.useMedia()` function is first called. Without these permissions, users will be unable to retrieve a list of available media devices or to retrieve any actual media streams.
 
-## Initialize the SendBirdCall instance in a client app
+## Initialize the SendBirdCall instance in a client application
 As shown below, the `SendBirdCall` instance must be initiated when a client app is launched. If another initialization with another `APP_ID` takes place, all existing data will be deleted and the `SendBirdCall` instance will be initialized with the new `APP_ID`.
 ```javascript
 SendBirdCall.init(APP_ID);
 ```
 
 ## Authenticate a user and connect websocket to server
-In order to make and receive calls, authenticate the user with SendBird server with the the `SendBirdCall.authenticate()` method. To make or receive calls, `SendBirdCall` should be connected to websocket server. Connect socket after authentication has completed using `SendBirdCall.connectWebSocket()` method.
+In order to make and receive calls, users must first be authenticated on the SendBird server using the  `SendBirdCall.authenticate()` function. The `SendBirdCall` object must then be connected to the websocket server using `SendBirdCall.connectWebSocket()` method.
 ```javascript
 // Authentication
 SendBirdCall.authenticate({ USER_ID, ACCESS_TOKEN }, (res, error) => {
@@ -68,11 +72,10 @@ SendBirdCall.connectWebSocket()
 ```
 
 ## Register event handlers
-The SDK provides two types of event handlers for various events on your client application: SendBirdCallListener and DirectCallListener.
+Two types of event handlers must be registered for various events that client apps may respond to: a device-specific listener and a call-specific listener.
 
-### SendBirdCallListener
-Register a device-specific event handler using the `SendBirdCall.addListener()` method. Before adding the  `onRinging()`, a user can't receive an `onRinging` event. Therefore, it is recommended to add this handler at the beginning of the app. Once the listener is added, responding to device-wide events (for example, incoming calls) is then managed as shown below:
-
+### Device-specific Listener
+Register a device-specific event handler using the `SendBirdCall.addListener()` method. Prior to registering this, the `onRinging()` event cannot be detected. It is therefore recommended that this event handler be added during initialization.  After this device-specific event is added, responding to device-wide events (e.g. incoming calls) is handled as shown below:
 ```javascript
 SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
   onRinging: (call) => {
@@ -80,15 +83,15 @@ SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
   }
 });
 ```
-`UNIQUE_HANDLER_ID` is any unique string value (for example, UUID).
+`UNIQUE_HANDLER_ID` is any unique string value (e.g. UUID).
 <br/>
 
 | Method        | Description                                                      |
 |---------------|------------------------------------------------------------------|
-|onRinging()    | Invoked when incoming calls are received in the callee’s device. |
+|onRinging()    | Incoming calls are received on the callee’s device. |
 
-### DirectCallListener
-Register a call-specific event handler by attaching handler function to the properties of call object directly. Responding to call-specific events (for example, call connected) is then managed as shown below:
+### Call-specific Listener
+Register a call-specific event handler by attaching an event handler function directly to the properties of the call object. Responding to call-specific events (e.g. sucessfull call connection) is then handled as shown below:
 
 ```javascript
 // call is 'DirectCall' object
@@ -128,22 +131,24 @@ call.onCustomItemsDeleted = (call, deletedKeys) => {
   ...
 };
 ```
-<br/>
 
-| EventListener | Description | 
-|---------------|-------------|
-|onEstablished | On the caller’s device and the callee’s device, the callee has accepted the call by running the method call.accept(), but they are not yet connected to media devices. |
-|onConnected | Media devices (for example, microphone and speakers) between the caller and callee are connected and can start the call using media devices. |
-|onEnded | The call has ended on the caller’s device or the callee’s device. This is triggered automatically when either party runs the method call.end(). This event listener is also invoked if there are other reasons for ending the call. A table of which can be seen at the bottom. |
-|onReconnecting | DirectCall started attempting to reconnect to the other party after a media connection disruption. |
-|onReconnected | The disrupted media connection reconnected. |
-|onRemoteAudioSettingsChanged	| The other party changed their audio settings. |
-|onRemoteVideoSettingsChanged	| The other party changed their video settings. |
-|onCustomItemsUpdated |	One or more of DirectCall’s custom items (metadata) have been updated. |
-|onCustomItemsDeleted	| One or more of DirectCall’s custom items (metadata) have been deleted. |
+| Event Listener                         | Invocation Criteria |
+|--------------------------------|--------------|
+| onEstablished                | The callee accepted the call using the method `call.accept()`, but neither the caller or callee’s devices are as of yet connected to media devices. |
+| onConnected                  | Media devices (e.g. microphone and speakers) between the caller and callee are connected and the voice or video call can begin. |
+| onEnded                      | The call has ended on either the caller or the callee’s devices. This is triggered automatically when either party runs the method `call.end()`. This event listener is also invoked if the call is ended for other reasons. See the bottom of this readme for a list of all possible reasons for call termination.  |
+| onRemoteAudioSettingsChanged | The other party changed their audio settings. |
+| onRemoteVideoSettingsChanged | The other party changed their video settings. |
+| onCustomItemsUpdated         | One or more of `call`’s custom items (metadata) have been updated. |
+| onCustomItemsDeleted         | One or more of `call`’s custom items (metadata) have been deleted. |
+| onReconnecting               | `call` started attempting to reconnect to the other party after a media connection disruption. |
+| onReconnected                | The disrupted media connection reconnected. |
+| onAudioDeviceChanged         | The audio device used in the call has changed. |
+| onVideoDeviceChanged         | The video device used in the call has changed. |
+
 
 ## Make a call
-Initiate a call by first preparing the `DialParams` call parameter object. This contains the intended callee’s user id, weather or not it is a video call, as well as a `DirectCallOption` object. `DirectCallOption` is used to set the call’s initial configuration (e.g. muted/unmuted). Once prepared, the `DialParams` object is then passed into the `SendBirdCall.dial()` method to starting making a call.
+Initiate a call by first preparing the `dialParams` call parameter object. This contains the intended callee’s user id, whether or not it is a video call, as well as a `callOption` object. `callOption` is used to set the call’s initial configuration (e.g. muted/unmuted). Once prepared, the `dialParams` object is then passed into the `SendBirdCall.dial()` method to starting making a call.
 ```javascript
 const dialParams = {
   userId: CALLEE_ID,
@@ -178,7 +183,7 @@ call.onRemoteAudioEnabled = (call) => {
 };
 ```
 
-Media view can also be set by `call.setLocalMediaView(element)` or `call.setRemoteMediaView(element)`. Be sure that you need `remoteMediaView` set for the remote media stream to be played. setting `autoplay` property in those media elements are also recommended.
+The media vieweris set using `call.setLocalMediaView(element)` or `call.setRemoteMediaView(element)`.  The `remoteMediaView` DOM element is required for the remote media stream to be displayed. Setting this element’s `autoplay` property to `true` is also recommended.
 
 ```html
 <video id="remote_video_element_id" autoplay>
@@ -191,9 +196,9 @@ call.setRemoteMediaView(document.getElementById('remote_video_element_id'));
 ```
 
 ## Receive a call
-Receive incoming calls by first registering `SendBirdCallListener`. Accept or decline incoming calls using the `directCall.accept()` or the `directCall.end()` methods. If the call is accepted, a media session will automatically be established by the SDK.
+Receive incoming calls by first registering a listener. Accept or decline incoming calls using the `call.accept()` or the `call.end()` methods. If the call is accepted, a media session will automatically be established.
 
-The event listeners such as `onEstablished`, `onConnected` in the `DirectCall` instance must be attached before accepting a call. Once attached, the listeners enable reacting to mid-call events via attached callbacks methods.
+Before accepting any calls, event listeners (e.g. `onEstablished`, `onConnected`) must be registered upfront. Once registered, these listeners enable reacting to in-call events via callbacks methods.
 
 ```javascript
 SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
@@ -224,14 +229,13 @@ SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
   }
 });
 ```
-> If you have set media view via `call.setLocalMediaView()` and `call.setRemoteMediaView()`, be sure to pass the same media views to the `DirectCallOption` in `AcceptParams`, or it will be overriden after `call.accept()`
-
+>**Note**: If the media viewer elements have been set via `call.setLocalMediaView()` and `call.setRemoteMediaView()`, ensure that the same media views are set in `acceptParams`’s `callOption` . Otherwise, these will be overriden during `call.accept()`
 
 Incoming calls are received via the application's persistent internal server connection, which is established by `SendBirdCall.connectWebSocket()`.
-In any case it is accidentally disconnected, it will try to reconnect every 2 seconds.
+In the event of accidental disconnection, the application will attempt to reconnect every 2 seconds.
 
 ## Handle a current call
-During an ongoing call, mute or unmute the caller’s microphone using the `directCall.muteMicrophone()` or `directCall.unmuteMicrophone()` methods. If the callee changes their audio settings, the caller is notified via the `directCall.onRemoteAudioSettingsChanged` listener. The caller may start or stop video using the `directCall.startVideo()` or `directCall.stopVideo()` methods. If the callee changes their video settings, the caller is notified via the `directCall.onRemoteVideoSettingsChanged` listener. 
+During an ongoing call, mute or unmute the caller’s microphone using the `call.muteMicrophone()` or `call.unmuteMicrophone()` methods. If the callee changes their audio settings, the caller is notified via the `call.onRemoteAudioSettingsChanged()` listener. The caller may start or stop video using the `call.startVideo()` or `call.stopVideo()` methods. If the callee changes their video settings, the caller is notified via the `call.onRemoteVideoSettingsChanged()` listener. Switching between the front and the back cameras is done using `call.switchCamera(CompletionHandler)`.
 
 ```javascript
 // mute my microphone
@@ -259,7 +263,7 @@ call.onRemoteAudioSettingsChanged = (call) => {
 ```
 
 ## End a call
-A caller can end a call using the `directCall.end()` method. This event can be processed via the `directCall.onEnded` listener. This listener is also triggered when the callee ends the call.
+A caller can end a call using the `call.end()` method. This event can be processed via the `call.onEnded` listener. This listener is also triggered when the callee ends the call.
 
 ```javascript
 // End a call
@@ -272,36 +276,36 @@ call.onEnded = (call) => {
 ```
 
 ## Configuring media devices
-There is a collection of methods in `SendBirdCall` to configure media devices. For each media type, it has methods to retrieve list of devices, retrieve current device, select device, update devices. If media device configuration changes, every on-going calls are affected immediately.
+The `SendBirdCall` object contains a collection of methods used to configure media devices. Each media type has corresponding methods to (1) retrieve a list of devices (2) retrieve the current device, (3) select a device, and (4) update devices. If media device configuration changes, any ongoing calls are affected immediately.
 
 |Method | Description |
 |-------|-------------|
-|useMedia(constraints) | Tries to grant permission to access media devices |
-|getCurrentAudioInputDevice() | Get current audio input device |
-|getAvailableAudioInputDevices() | Get list of available audio input devices | 
-|selectAudioInputDevice(mediaDeviceInfo) | Select audio input device to use |
-|getCurrentAudioOutputDevice() | Get current audio output device  |
-|getAvailableAudioOutputDevices() | Get list of available audio output devices   |
-|selectAudioOutputDevice(mediaDeviceInfo) | Select audio output device to use |
-|getCurrentVideoInputDevice() | Get current video input device |
-|getAvailableVideoInputDevices() | Get list of available video input devices  |
-|selectVideoInputDevice(mediaDeviceInfo) | Get current video input device |
+|useMedia(constraints) | Attempts to grant permission to access media devices |
+|getCurrentAudioInputDevice() | Get the current audio input device |
+|getAvailableAudioInputDevices() | Get a list of available audio input devices | 
+|selectAudioInputDevice(mediaDeviceInfo) | Select the audio input device to use |
+|getCurrentAudioOutputDevice() | Get the current audio output device  |
+|getAvailableAudioOutputDevices() | Get a list of available audio output devices   |
+|selectAudioOutputDevice(mediaDeviceInfo) | Select the audio output device to use |
+|getCurrentVideoInputDevice() | Get the current video input device |
+|getAvailableVideoInputDevices() | Get a list of available video input devices  |
+|selectVideoInputDevice(mediaDeviceInfo) | Get the current video input device |
 |updateMediaDevices(constraints) | Manually update media devices |
 
-There is also a collection of event listeners in `SendBirdCallListener` to handle changes in media devices.
-|Event Listener | Description |
+The device specific-event handler also contains a collection of event listeners used to handle changes in media devices.
+|Event Listener | Invocation criteria |
 |---------------|-------------|
-|onAudioInputDeviceChanged | called when there's a change in audio input devices |
-|onAudioOutputDeviceChanged | called when there's a change in audio output devices |
-|onVideoInputDeviceChanged | called when there's a change in video input devices |
+|onAudioInputDeviceChanged | audio input devices have changed |
+|onAudioOutputDeviceChanged | audio output devices have changed |
+|onVideoInputDeviceChanged | video input devices have changed |
 
-Before using methods and event listeners listed above, be sure to call `SendBirdCall.useMedia(constraints)` to be granted permission to access media devices. Without call to `SendBirdCall.useMedia`, above methods might return wrong or unexpected results.
+Before using the methods and event listeners listed above, ensure that `SendBirdCall.useMedia(constraints)` has been executed. Failing to do this will result in these methods causing unexpected behaviors or failed outcomes.
 
 ```javascript
 //on settings view opened
 const mediaAccess = SendBirdCall.useMedia({audio: true, video: true});
 
-//This code demonstrates for audio input devices. You can do the same for the audio output, video input devices too.
+//This code demonstrates for audio input devices. The same can also be done for audio output and video input devices.
 const availableDevices = SendBirdCall.getAvilableAudioInputDevices();
 const currentDevice = SendBirdCall.getCurrentAudioInputDevice();
 //populate option elements in select element
@@ -326,14 +330,13 @@ SendBirdCall.removeListener('my-listener');
 mediaAccess.dispose();
 
 ```
-> Never forget to dispose mediaAccess you retrived by calling `SendBirdCall.useMedia`. If you do not call `mediaAccess.dispose`, the permission granted by `SendBirdCall.useMedia` won't be revoked and it might result in unexpected use of media devices such as microphone or camera.
+> Always be sure to `dispose()` of the `mediaAccess`  retrieved from  `SendBirdCall.useMedia`. Failure to do so will result in vulnerable media access permissions that could grant unintended use of the user’s camera microphone or camera.
 
-> In `Chrome` / `Firefox`, you don't need to call `SendBirdCall.updateMediaDevices` if you utilize media device event listener to update your view or device list. But in `Safari`, those event listeners might not be called when even there's a change in your media devices, so you might need to update your devices manually by calling `SendBirdCall.updateMediaDevices`
+> In `Chrome` / `Firefox`, `SendBirdCall.updateMediaDevices` does not need to be called if the media device event listener is used to update the view or device list. However, in `Safari`, those event listeners might not be called after a media device change.  In such cases, manually calling `SendBirdCall.updateMediaDevices` may be required.
 
 
 ## Deauthenticate a user
-You can deauthenticate the user with `SendBirdCall.deauthenticate()` method. it will discard all current directCalls, session keys, and user information; except for [SendBirdCallListener](#SendBirdCallListener). `SendBirdCall.deauthenticate()` can be used as 'logout' method for current user.
-
+Users are deauthenticated (i.e. “logged out”) using with `SendBirdCall.deauthenticate()` method. This will discard all current instances of `directCall`,  all session keys, and all user information. However, the device-specific event handler will remain. 
 ```javascript
 // Deauthenticate
 SendBirdCall.deauthenticate();
@@ -374,11 +377,12 @@ query.next((directCallLog) => {
 |hasNext           | If true, there is more call history to be retrieved.                                                                                                                                                                                                                                                              |
 |isLoading         | If true, call history is being retrieved from SendBirdCall server.                                                                                                                                                                                                                                                |
 |params.limit      | Specifies the number of call logs to return at once.                                                                                                                                                                                                                                                              |
-|params.myRole     | Returns call logs of the specified role. For example, if myRole is `'dc_callee'`, query will return only the callee’s call logs.                                                                                                                                                                                                  |
-|params.endResults | Returns the call logs for specified results. If you specify more than one result, they are processed as `OR` condition and all call logs corresponding with the specified end results will be returned. For example, if endResults is `['NO_ANSWER', 'CANCELED']`, only the `NO_ANSWER` and `CANCELED` call logs will be returned.|
+|params.myRole     | Returns call logs of the specified role. (e.g. if myRole is `'dc_callee'`, query will return only the callee’s call logs.)                                                                                                                                                                                               |
+|params.endResults | Returns the call logs for specified results. If more than one result is specified, they are processed as `OR` condition and all call logs corresponding with the specified end results will be returned. For example, if endResults is `['NO_ANSWER'`, `'CANCELED']`, only the `NO_ANSWER` and `CANCELED` call logs will be returned.|
 
 ## Additional information: call results
-To access the additional information relating to why a call ended, consider that you can get `directCall.endResult` property whenever needed. However, it would be most relevant perhaps, to call it within the  `onEnded()` callback.  
+Information relating the end result of a call can be obtained at any time via the  `directCall.endResult`  property, best accessed within the `onEnded()` callback.  
+
 
 | EndResult        | Description                                                                                                            |
 |------------------|------------------------------------------------------------------------------------------------------------------------|
