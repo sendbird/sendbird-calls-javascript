@@ -97,12 +97,12 @@ SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
 `UNIQUE_HANDLER_ID` is any unique string value (e.g. UUID).
 <br/>
 
-| Method        | Description                                                      |
+| Event Listener | Invocation Criteria                                         |
 |---------------|------------------------------------------------------------------|
-|onRinging()    | Incoming calls are received on the callee’s device. |
-|onAudioInputDeviceChanged() | Audio input devices have changed. |
-|onAudioOutputDeviceChanged() | Audio output devices have changed. |
-|onVideoInputDeviceChanged() | Video input devices have changed. |
+|onRinging    | Incoming calls are received on the callee’s device. |
+|onAudioInputDeviceChanged | Audio input devices have changed. |
+|onAudioOutputDeviceChanged | Audio output devices have changed. |
+|onVideoInputDeviceChanged | Video input devices have changed. |
 
 ### Call-specific Listener
 Register a call-specific event handler by attaching an event handler function directly to the properties of the call object. Responding to call-specific events (e.g. sucessfull call connection) is then handled as shown below:

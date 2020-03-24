@@ -1,4 +1,34 @@
 # Change Log
+### 1.0.0 (Mar 24, 2020)
+* README has been updated. Refer to readme to learn how to configure media devices. 
+* Interfaces for media devices are added / changed.
+    * Below methods are added in `SendBirdCall`
+        * `getCurrentVideoInputDevice(): MediaDeviceInfo`
+        * `getAvailableVideoInputDevices(): MediaDeviceInfo[]`
+        * `selectVideoInputDevice(mediaDeviceInfo: MediaDeviceInfo): void`
+        * `updateMediaDevices(constraints: { audio: boolean; video: boolean }): void`
+        * `useMedia(constraints: { audio: boolean; video: boolean }): MediaAccess`
+    * Below event listener is added in `SendBirdCallListener`
+        * `onVideoInputDeviceChanged: ((currentVideoInputDevice: MediaDeviceInfo, availableVideoInputDevices: MediaDeviceInfo[]) => void) | null`
+    * Below methods are changed in `SendBirdCall`
+        * `getCurrentVideoInputDevice(): MediaDeviceInfo`
+        * `getAvailableAudioInputDevices()` is now synchronous
+        * `selectAudioInputDevice(mediaDeviceInfo: MediaDeviceInfo)` is now synchronous
+        * `getAvailableAudioOutputDevices()` is now synchronous
+        * `selectAudioOutputDevice(mediaDeviceInfo: MediaDeviceInfo)` is now synchronous
+
+* Deprecated methods are removed
+    * In `SendBirdCall`,
+        * `dial(userId: string, isVideoCall: boolean, callOption: DirectCallOption, callback?: DialHandler): DirectCall` is removed. Use `dial(params: DialParams, callback?: DialHandler): DirectCall` instead.
+    * In `DirectCall`,
+        * `onRemoteAudioEnabled` event listener is removed. Use `onRemoteAudioSettingsChanged` instead.
+        * `accept(callOption: DirectCallOption)` is removed. Use `accept(params: AcceptParams): void` instead.
+        * `mute()` is removed. Use `muteMicrophone()` instead.
+        * `unmute()` is removed. Use `unmuteMicrophone()` instead.
+    * In `DirectCallOption`
+        * `localVideoView` is removed. Use `localMediaView` instead.
+        * `remoteVideoView` is removed. Use `remoteMediaView` instead.
+
 ### 0.9.0 (Mar 18, 2020)
 * Internal improvement
 ### 0.8.1 (Mar 13, 2020)
