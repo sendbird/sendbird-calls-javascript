@@ -1,4 +1,4 @@
-/** 0.9.0 */
+/** 1.0.0 */
 
 export as namespace SendBirdCall;
 
@@ -9,15 +9,19 @@ export function connectWebSocket(): Promise<void>;
 export function addListener(id: string, listener: SendBirdCallListener): void;
 export function removeListener(id: string): void;
 export function removeAllListeners(): void;
-export function dial(userId: string, isVideoCall: boolean, callOption: DirectCallOption, callback?: DialHandler): DirectCall;
 export function dial(params: DialParams, callback?: DialHandler): DirectCall;
 export function createDirectCallLogListQuery(params?: DirectCallLogListQueryParams): DirectCallLogListQuery;
 export function getCurrentAudioInputDevice(): MediaDeviceInfo;
-export function getAvailableAudioInputDevices(): Promise<MediaDeviceInfo[]>;
-export function selectAudioInputDevice(mediaDeviceInfo: MediaDeviceInfo): Promise<void>;
+export function getAvailableAudioInputDevices(): MediaDeviceInfo[];
+export function selectAudioInputDevice(mediaDeviceInfo: MediaDeviceInfo): void;
 export function getCurrentAudioOutputDevice(): MediaDeviceInfo;
-export function getAvailableAudioOutputDevices(): Promise<MediaDeviceInfo[]>;
-export function selectAudioOutputDevice(mediaDeviceInfo: MediaDeviceInfo): Promise<void>;
+export function getAvailableAudioOutputDevices(): MediaDeviceInfo[];
+export function selectAudioOutputDevice(mediaDeviceInfo: MediaDeviceInfo): void;
+export function getCurrentVideoInputDevice(): MediaDeviceInfo;
+export function getAvailableVideoInputDevices(): MediaDeviceInfo[];
+export function selectVideoInputDevice(mediaDeviceInfo: MediaDeviceInfo): void;
+export function updateMediaDevices(constraints: { audio: boolean; video: boolean }): void;
+export function useMedia(constraints: { audio: boolean; video: boolean }): MediaAccess;
 export function updateCustomItems(callId: string, customItems: CustomItems, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function deleteCustomItems(callId: string, customItemKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function deleteAllCustomItems(callId: string, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
@@ -56,8 +60,8 @@ export enum DirectCallEndResult {
   COMPLETED = 'completed',
   CONNECTION_LOST = 'connection_lost',
   TIMED_OUT = 'timed_out',
-  FAILED_TO_DIAL = 'failed_to_dial',
-  FAILED_TO_ACCEPT = 'failed_to_accept',
+  DIAL_FAILED = 'dial_failed',
+  ACCEPT_FAILED = 'accept_failed',
   UNKNOWN = 'unknown'
 }
 
@@ -65,6 +69,7 @@ export interface SendBirdCallListener {
   onRinging: ((directCall: DirectCall) => void) | null;
   onAudioInputDeviceChanged: ((currentAudioInputDevice: MediaDeviceInfo, availableAudioInputDevices: MediaDeviceInfo[]) => void) | null;
   onAudioOutputDeviceChanged: ((currentAudioOutputDevice: MediaDeviceInfo, availableAudioOutputDevices: MediaDeviceInfo[]) => void) | null;
+  onVideoInputDeviceChanged: ((currentVideoInputDevice: MediaDeviceInfo, availableVideoInputDevices: MediaDeviceInfo[]) => void) | null;
 }
 
 export interface DirectCall {
@@ -73,8 +78,6 @@ export interface DirectCall {
   onReconnected: ((call: DirectCall) => void) | null;
   onReconnecting: ((call: DirectCall) => void) | null;
 
-  //deprecated
-  onRemoteAudioEnabled: ((call: DirectCall) => void) | null;
   onRemoteAudioSettingsChanged: ((call: DirectCall) => void) | null;
   onRemoteVideoSettingsChanged: ((call: DirectCall) => void) | null;
   onCustomItemsUpdated: ((call: DirectCall, updatedKeys: string[]) => void) | null;
@@ -106,15 +109,8 @@ export interface DirectCall {
   startVideo(): void;
 
   getDuration(): number;
-  accept(callOption: DirectCallOption): void;
   accept(params: AcceptParams): void;
   end(): void;
-
-  //deprecated
-  mute(): void;
-
-  //deprecated
-  unmute(): void;
 
   muteMicrophone(): void;
   unmuteMicrophone(): void;
@@ -127,8 +123,6 @@ export interface DirectCall {
 export interface DirectCallOption {
   localMediaView?: HTMLMediaElement;
   remoteMediaView?: HTMLMediaElement;
-  localVideoView?: HTMLMediaElement;
-  remoteVideoView?: HTMLMediaElement;
   audioEnabled?: boolean;
   videoEnabled?: boolean;
 }
@@ -196,4 +190,8 @@ export interface DirectCallLogListQueryParams {
 
 export interface CustomItems {
   [key: string]: string;
+}
+
+export interface MediaAccess {
+  dispose(): void;
 }
