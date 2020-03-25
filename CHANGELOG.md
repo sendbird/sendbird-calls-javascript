@@ -1,4 +1,8 @@
 # Change Log
+### 1.0.1 (Mar 25, 2020)
+* Bug fix
+    * Fixed the bug that `onRemoteVideoSettingsChanged` doesn't fire.
+* The default value of `callOption.videoEnabled` is changed to `ture`.
 ### 1.0.0 (Mar 24, 2020)
 * README has been updated. Refer to readme to learn how to configure media devices. 
 * Interfaces for media devices are added / changed.
