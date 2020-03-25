@@ -195,14 +195,16 @@ call.onRemoteAudioEnabled = (call) => {
 };
 ```
 
-The media viewers set using `call.setLocalMediaView(element)` or `call.setRemoteMediaView(element)`.  The `remoteMediaView` DOM element is required for the remote media stream to be displayed. Setting this element’s `autoplay` property to `true` is also recommended.
+> A media viewer is a [HTMLMediaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement) (e.g. &lt;audio&gt;, &lt;video&gt;) to display media stream. The `remoteMediaView` is required for the remote media stream to be displayed. Setting `autoplay` property of media viewer to `true` is also recommended. 
+
+> The media viewers can also be set using `call.setLocalMediaView(element)` or `call.setRemoteMediaView(element)`.  
 
 ```html
 <video id="remote_video_element_id" autoplay>
 ```
 
 ```javascript
-//to set media view lazily
+//to set media viewer lazily
 call.setLocalMediaView(document.getElementById('local_video_element_id'));
 call.setRemoteMediaView(document.getElementById('remote_video_element_id'));
 ```
@@ -241,7 +243,7 @@ SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
   }
 });
 ```
->**Note**: If the media viewer elements have been set via `call.setLocalMediaView()` and `call.setRemoteMediaView()`, ensure that the same media views are set in `acceptParams`’s `callOption` . Otherwise, these will be overriden during `call.accept()`
+>**Note**: If the media viewer elements have been set via `call.setLocalMediaView()` and `call.setRemoteMediaView()`, ensure that the same media viewers are set in `acceptParams`’s `callOption` . Otherwise, these will be overriden during `call.accept()`
 
 Incoming calls are received via the application's persistent internal server connection, which is established by `SendBirdCall.connectWebSocket()`.
 In the event of accidental disconnection, the application will attempt to reconnect every 2 seconds.
