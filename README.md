@@ -190,7 +190,7 @@ call.onEnded = (call) => {
   ...
 };
 
-call.onRemoteAudioEnabled = (call) => {
+call.onRemoteAudioSettingsChanged = (call) => {
   ...
 };
 ```
@@ -229,7 +229,7 @@ SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
       ...
     };
 
-    call.onRemoteAudioEnabled = (call) => {
+    call.onRemoteAudioSettingsChanged = (call) => {
       ...
     };
 
