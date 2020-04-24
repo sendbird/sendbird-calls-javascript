@@ -167,7 +167,9 @@ const dialParams = {
   isVideoCall: true,
   callOption: {
     localMediaView: document.getElementById('local_video_element_id'),
-    remoteMediaView: document.getElementById('remote_video_element_id')
+    remoteMediaView: document.getElementById('remote_video_element_id'),
+    audioEnabled: true,
+    videoEnabled: true
   }
 };
 
@@ -191,6 +193,10 @@ call.onEnded = (call) => {
 };
 
 call.onRemoteAudioSettingsChanged = (call) => {
+  ...
+};
+
+call.onRemoteVideoSettingsChanged = (call) => {
   ...
 };
 ```
@@ -233,9 +239,16 @@ SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
       ...
     };
 
+    call.onRemoteVideoSettingsChanged = (call) => {
+      ...
+    };
+
     const acceptParams = {
       callOption: {
-        remoteMediaView: document.getElementById('remote_video_element_id')
+        localMediaView: document.getElementById('local_video_element_id'),
+        remoteMediaView: document.getElementById('remote_video_element_id'),
+        audioEnabled: true,
+        videoEnabled: true
       }
     };
 
