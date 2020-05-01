@@ -1,4 +1,9 @@
 # Change Log
+### 1.0.2 (May 1, 2020)
+* Below methods are added in `SendBirdCall`
+    * `setRingingTimeout(timeout: int): void`
+* Optimized video call frame rate.
+* Improved stability.
 ### 1.0.1 (Mar 25, 2020)
 * Bug fix
     * Fixed the bug that `onRemoteVideoSettingsChanged` doesn't fire.

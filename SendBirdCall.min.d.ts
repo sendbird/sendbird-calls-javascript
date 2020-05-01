@@ -1,4 +1,4 @@
-/** 1.0.1 */
+/** 1.0.2 */
 
 export as namespace SendBirdCall;
 
@@ -26,6 +26,7 @@ export function updateCustomItems(callId: string, customItems: CustomItems, call
 export function deleteCustomItems(callId: string, customItemKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function deleteAllCustomItems(callId: string, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function setLoggerLevel(level: LoggerLevel);
+export function setRingingTimeout(timeout: int);
 export function getCall(callId: string): DirectCall;
 export const sdkVersion: string;
 export const appId: string;
