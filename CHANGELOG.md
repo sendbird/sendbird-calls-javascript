@@ -1,5 +1,5 @@
 # Change Log
-### 1.0.3 (May 22, 2020)
+### 1.1.0 (May 22, 2020)
 * Below property is added in `SendBirdCall`
     * `ErrorCode`
 * Below keys are added in `SendBirdCall.LoggerLevel`
