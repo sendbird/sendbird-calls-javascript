@@ -1,4 +1,4 @@
-/** 1.0.2 */
+/** 1.1.0 */
 
 export as namespace SendBirdCall;
 
@@ -25,7 +25,7 @@ export function useMedia(constraints: { audio: boolean; video: boolean }): Media
 export function updateCustomItems(callId: string, customItems: CustomItems, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function deleteCustomItems(callId: string, customItemKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function deleteAllCustomItems(callId: string, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
-export function setLoggerLevel(level: LoggerLevel);
+export function setLoggerLevel(level: LoggerLevel): LoggerLevel;
 export function setRingingTimeout(timeout: int);
 export function getCall(callId: string): DirectCall;
 export const sdkVersion: string;
@@ -45,7 +45,9 @@ export interface AcceptParams {
 
 export enum LoggerLevel {
   NONE = 'NONE',
-  ERROR = 'ERROR'
+  ERROR = 'ERROR',
+  WARNING = 'WARNING',
+  INFO = 'INFO'
 }
 
 export enum DirectCallUserRole {
@@ -64,6 +66,38 @@ export enum DirectCallEndResult {
   DIAL_FAILED = 'dial_failed',
   ACCEPT_FAILED = 'accept_failed',
   UNKNOWN = 'unknown'
+}
+
+export enum ErrorCode {
+  // Call
+  DIAL_CANCELED= 1800100,
+  MY_USER_ID_NOT_ALLOWED= 1800101,
+
+  // Client
+  ERR_REQUEST_FAILED= 1800200,
+  WS_NOT_CONNECTED= 1800201,
+  WS_CONNECTION_FAILED= 1800202,
+  ERR_NO_RESPONSE_DUE_TO_TIMEOUT= 1800203,
+  ERR_REQUEST_FAILED_DUE_TO_WEBSOCKET_CONNECTION_LOST= 1800204,
+  ERR_WRONG_RESPONSE= 1800205,
+  ERR_QUERY_IN_PROGRESS= 1800206,
+  INTERNAL_SERVER_ERROR= 1800207,
+  ERR_MALFORMED_DATA= 1800208,
+
+  // General
+  INVALID_PARAMETER_VALUE= 1800300,
+  INVALID_PARAMETER_TYPE= 1800301,
+  INSTANCE_NOT_INITIALIZED= 1800302,
+  USER_NOT_AUTHENTICATED= 1800303,
+
+  // Server
+  ERR_SERVER_INTERNAL_ERROR= 1400999,
+  ERR_INVALID_CALL_STATUS= 1400101,
+  ERR_CALL_DOES_NOT_EXIST= 1400102,
+  ERR_CALLEE_DOES_NOT_EXIST= 1400103,
+  ERR_DIAL_MYSELF= 1400104,
+  ERR_NO_PERMISSION= 1400105,
+  ERR_CALLEE_NEVER_AUTHENTICATE= 1400106
 }
 
 export interface SendBirdCallListener {
@@ -99,6 +133,7 @@ export interface DirectCall {
   readonly endedBy: DirectCallUser;
   readonly isEnded: boolean;
   readonly endResult: DirectCallEndResult;
+  readonly callLog: DirectCallLog;
   readonly customItems: CustomItems;
   readonly localMediaView: HTMLMediaElement;
   readonly remoteMediaView: HTMLMediaElement;
@@ -150,6 +185,7 @@ export interface DirectCallLog {
   readonly endResult: DirectCallEndResult;
   readonly isVideoCall: boolean;
   readonly customItems: CustomItems;
+  readonly isFromServer: boolean;
 }
 
 export interface DirectCallUser {

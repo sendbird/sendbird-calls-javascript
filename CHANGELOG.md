@@ -1,4 +1,14 @@
 # Change Log
+### 1.0.3 (May 22, 2020)
+* Below property is added in `SendBirdCall`
+    * `ErrorCode`
+* Below keys are added in `SendBirdCall.LoggerLevel`
+    * `WARNING`
+    * `INFO`
+* Below property is added in `DirectCall`
+    * `readonly callLog`
+* Below property is added in `DirectCallLog`
+    * `readonly isFromServer`
 ### 1.0.2 (May 1, 2020)
 * Below methods are added in `SendBirdCall`
     * `setRingingTimeout(timeout: int): void`
