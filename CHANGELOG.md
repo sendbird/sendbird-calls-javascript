@@ -1,4 +1,7 @@
 # Change Log
+### 1.1.1 (May 25, 2020)
+* Bug fix
+    * Fixed the bug that some console logging ignored `LoggerLevel`.
 ### 1.1.0 (May 22, 2020)
 * Below property is added in `SendBirdCall`
     * `ErrorCode`
