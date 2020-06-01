@@ -280,20 +280,20 @@ call.stopVideo();
 // receives the audio event
 call.onRemoteAudioSettingsChanged = (call) => {
   if (call.isRemoteAudioEnabled) {
-    // The peer has been muted.
-    // Consider displaying an unmuted icon.
+    // The peer has been unmuted.
+    // Consider displaying a muted icon.
   } else {
     // The peer has been muted.
-    // Consider displaying and toggling a muted icon.
+    // Consider displaying an unmuted icon.
   }
 };
 
 // receives the video event
 call.onRemoteVideoSettingsChanged = (call) => {
   if (call.isRemoteVideoEnabled) {
-    // The peer has stopped the video.
-  } else {
     // The peer has started the video.
+  } else {
+    // The peer has stopped the video.
   }
 };
 ```
