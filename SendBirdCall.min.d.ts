@@ -1,4 +1,4 @@
-/** 1.1.1 */
+/** 1.1.2 */
 
 export as namespace SendBirdCall;
 
