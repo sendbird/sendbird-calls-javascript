@@ -1,4 +1,6 @@
 # Change Log
+### 1.1.3 (June 18, 2020)
+* Improved stability.
 ### 1.1.2 (June 16, 2020)
 * Improved stability.
 ### 1.1.1 (May 25, 2020)
