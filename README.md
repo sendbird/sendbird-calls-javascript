@@ -14,7 +14,7 @@
 The SendBird Calls JavaScript SDK provides a framework to make and receive voice and video calls. “Direct calls” in the SDK refers to one-to-one calls, comparable to “direct messages” (DMs) in messaging services. To make a direct voice or video call, the caller specifies the user ID of the intended callee, and dials. Upon dialing, all of the callee’s authenticated devices will receive incoming call notifications. The callee then can choose to accept the call from any one of the devices. When the call is accepted, a connection is established between the caller and the callee. This marks the start of the direct call. Call participants may mute themselves, as well as select the audio and video hardware used in the call. Calls may be ended by either party. The SendBird Dashboard displays call logs in the Calls menu for application owners and admins to review.
 
 ## SDK Prerequisites
-* Modern browsers implementing WebRTC APIs are supported; IE is not.
+* [Modern browsers implementing WebRTC APIs](https://caniuse.com/#feat=rtcpeerconnection) are supported; IE is not.
 * Edge is not supported, though it might be supported later.
 
 ```javascript
@@ -331,6 +331,7 @@ The `SendBirdCall` object contains a collection of methods used to configure med
 |updateMediaDevices(constraints) | Manually update media devices |
 
 The device specific-event handler also contains a collection of event listeners used to handle changes in media devices.
+
 |Event Listener | Invocation criteria |
 |---------------|-------------|
 |onAudioInputDeviceChanged | audio input devices have changed |
@@ -433,3 +434,12 @@ Information relating the end result of a call can be obtained at any time via th
 |DIAL_FAILED | The dial() method call has failed. |
 |ACCEPT_FAILED | The accept() method call has failed.|
 |OTHER_DEVICE_ACCEPTED | The incoming call was accepted on a different device. This device received an incoming call notification, but the call ended when a different device accepted it.|
+
+## Encoding Specs
+
+| Category           | Value  | Note                     |
+|--------------------|--------|--------------------------|
+| Frames per Second  | 24 fps |                          |
+| Maximum Resolution | 720p   | 1280x720 px; standard HD |
+| Audio Codec        | OPUS   |                          |
+| Video Codec        | VP8    |                          |
