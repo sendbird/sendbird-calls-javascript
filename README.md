@@ -38,6 +38,8 @@ import SendBirdCall from "sendbird-calls";
 
 SendBirdCall.init(APP_ID)
 ```
+> **Note**: If you are using TypeScript, you have to set ['--esModuleInterop' setting to `true` for 'default import'](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-7.html#support-for-import-d-from-cjs-from-commonjs-modules-with---esmoduleinterop), or use `import * as SendBirdCall from "sendbird-calls"` instead.
+
 Or use the minified file to initialize `SendBirdCall` as global variable in the header 
 ```html
 <script type="text/javascript" src="SendBirdCall.min.js"></script>
