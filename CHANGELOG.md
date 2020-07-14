@@ -1,4 +1,8 @@
 # Change Log
+### 1.1.4 (July 14, 2020)
+* Bug fix
+    * Fixed typo in `d.ts`.
+    * Fixed import error in Node environment.
 ### 1.1.3 (June 18, 2020)
 * Improved stability.
 ### 1.1.2 (June 16, 2020)

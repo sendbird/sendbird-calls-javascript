@@ -1,8 +1,8 @@
-/** 1.1.3 */
+/** 1.1.4 */
 
 export as namespace SendBirdCall;
 
-export function init(appId): void;
+export function init(appId: string): void;
 export function authenticate(authOption: AuthOption, handler?: AuthHandler): Promise<User>;
 export function deauthenticate(): void;
 export function connectWebSocket(): Promise<void>;
@@ -26,7 +26,7 @@ export function updateCustomItems(callId: string, customItems: CustomItems, call
 export function deleteCustomItems(callId: string, customItemKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function deleteAllCustomItems(callId: string, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function setLoggerLevel(level: LoggerLevel): LoggerLevel;
-export function setRingingTimeout(timeout: int);
+export function setRingingTimeout(timeout: number): void;
 export function getCall(callId: string): DirectCall;
 export const sdkVersion: string;
 export const appId: string;
