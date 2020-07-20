@@ -1,5 +1,6 @@
-/** 1.1.4 */
+/** 1.2.0 */
 
+// eslint-disable-next-line no-undef
 export as namespace SendBirdCall;
 
 export function init(appId: string): void;
@@ -26,7 +27,9 @@ export function updateCustomItems(callId: string, customItems: CustomItems, call
 export function deleteCustomItems(callId: string, customItemKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function deleteAllCustomItems(callId: string, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function setLoggerLevel(level: LoggerLevel): LoggerLevel;
+export function getOngoingCallCount(): number;
 export function setRingingTimeout(timeout: number): void;
+export function setCallConnectionTimeout(timeout: number): void;
 export function getCall(callId: string): DirectCall;
 export const sdkVersion: string;
 export const appId: string;
@@ -130,6 +133,7 @@ export interface DirectCall {
   readonly isLocalVideoEnabled: boolean;
   readonly isRemoteVideoEnabled: boolean;
   readonly myRole: DirectCallUserRole;
+  readonly isOngoing: boolean;
   readonly endedBy: DirectCallUser;
   readonly isEnded: boolean;
   readonly endResult: DirectCallEndResult;

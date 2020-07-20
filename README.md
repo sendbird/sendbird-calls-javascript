@@ -315,6 +315,15 @@ call.onEnded = (call) => {
 };
 ```
 
+## Mirror a MediaView
+You can set the current user’s local video view as mirrored or reversed when the camera is facing the user. This can be easily done by adding the `transform` CSS property to your `localMediaView` element. 
+```CSS
+#local-media-view
+{
+  transform: rotateY(180deg); /* add this property */
+}
+```
+
 ## Configuring media devices
 The `SendBirdCall` object contains a collection of methods used to configure media devices. Each media type has corresponding methods to (1) retrieve a list of devices (2) retrieve the current device, (3) select a device, and (4) update devices. If media device configuration changes, any ongoing calls are affected immediately.
 
