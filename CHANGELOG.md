@@ -1,4 +1,7 @@
 # Change Log
+### 1.2.1 (July 21, 2020)
+* Buf fix
+    * Fixed the unexpected exceptions in safari.
 ### 1.2.0 (July 20, 2020)
 * Added support for Peer-to-peer call.
     * The Peer-to-peer option can be configured on the dashboard.
