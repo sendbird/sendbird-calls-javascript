@@ -1,4 +1,4 @@
-/** 1.2.1 */
+/** 1.2.2 */
 
 // eslint-disable-next-line no-undef
 export as namespace SendBirdCall;
@@ -12,17 +12,17 @@ export function removeListener(id: string): void;
 export function removeAllListeners(): void;
 export function dial(params: DialParams, callback?: DialHandler): DirectCall;
 export function createDirectCallLogListQuery(params?: DirectCallLogListQueryParams): DirectCallLogListQuery;
-export function getCurrentAudioInputDevice(): MediaDeviceInfo;
-export function getAvailableAudioInputDevices(): MediaDeviceInfo[];
-export function selectAudioInputDevice(mediaDeviceInfo: MediaDeviceInfo): void;
+export function getCurrentAudioInputDevice(): InputDeviceInfo;
+export function getAvailableAudioInputDevices(): InputDeviceInfo[];
+export function selectAudioInputDevice(mediaDeviceInfo: InputDeviceInfo): void;
 export function getCurrentAudioOutputDevice(): MediaDeviceInfo;
 export function getAvailableAudioOutputDevices(): MediaDeviceInfo[];
 export function selectAudioOutputDevice(mediaDeviceInfo: MediaDeviceInfo): void;
-export function getCurrentVideoInputDevice(): MediaDeviceInfo;
-export function getAvailableVideoInputDevices(): MediaDeviceInfo[];
-export function selectVideoInputDevice(mediaDeviceInfo: MediaDeviceInfo): void;
+export function getCurrentVideoInputDevice(): InputDeviceInfo;
+export function getAvailableVideoInputDevices(): InputDeviceInfo[];
+export function selectVideoInputDevice(mediaDeviceInfo: InputDeviceInfo): void;
 export function updateMediaDevices(constraints: { audio: boolean; video: boolean }): void;
-export function useMedia(constraints: { audio: boolean; video: boolean }): MediaAccess;
+export function useMedia(constraints: { audio: boolean; video: boolean }): MediaAccess | undefined;
 export function updateCustomItems(callId: string, customItems: CustomItems, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function deleteCustomItems(callId: string, customItemKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function deleteAllCustomItems(callId: string, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
@@ -30,6 +30,7 @@ export function setLoggerLevel(level: LoggerLevel): LoggerLevel;
 export function getOngoingCallCount(): number;
 export function setRingingTimeout(timeout: number): void;
 export function setCallConnectionTimeout(timeout: number): void;
+export function handleWebhookData(data: WebhookData): void;
 export function getCall(callId: string): DirectCall;
 export const sdkVersion: string;
 export const appId: string;
@@ -105,9 +106,9 @@ export enum ErrorCode {
 
 export interface SendBirdCallListener {
   onRinging: ((directCall: DirectCall) => void) | null;
-  onAudioInputDeviceChanged: ((currentAudioInputDevice: MediaDeviceInfo, availableAudioInputDevices: MediaDeviceInfo[]) => void) | null;
+  onAudioInputDeviceChanged: ((currentAudioInputDevice: InputDeviceInfo, availableAudioInputDevices: InputDeviceInfo[]) => void) | null;
   onAudioOutputDeviceChanged: ((currentAudioOutputDevice: MediaDeviceInfo, availableAudioOutputDevices: MediaDeviceInfo[]) => void) | null;
-  onVideoInputDeviceChanged: ((currentVideoInputDevice: MediaDeviceInfo, availableVideoInputDevices: MediaDeviceInfo[]) => void) | null;
+  onVideoInputDeviceChanged: ((currentVideoInputDevice: InputDeviceInfo, availableVideoInputDevices: InputDeviceInfo[]) => void) | null;
 }
 
 export interface DirectCall {
@@ -142,8 +143,8 @@ export interface DirectCall {
   readonly localMediaView: HTMLMediaElement;
   readonly remoteMediaView: HTMLMediaElement;
 
-  setLocalMediaView(): Promise<void>;
-  setRemoteMediaView(): Promise<void>;
+  setLocalMediaView(mediaView: HTMLMediaElement): Promise<void>;
+  setRemoteMediaView(mediaView: HTMLMediaElement): Promise<void>;
 
   stopVideo(): void;
   startVideo(): void;
@@ -235,4 +236,18 @@ export interface CustomItems {
 
 export interface MediaAccess {
   dispose(): void;
+}
+
+export interface WebhookData {
+  category: string;
+  occured_at: number;
+  application_id: string;
+  sendbird_call?: {
+    version: number;
+    message_id: string;
+    cmd: string;
+    type: string;
+    payload: any;
+  };
+  [key: string]: any;
 }

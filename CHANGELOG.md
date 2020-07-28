@@ -1,4 +1,20 @@
 # Change Log
+### 1.2.2 (July 28, 2020)
+* Replaced MediaDeviceInfo with InputDeviceInfo in following `SendBirdCall` methods
+    * `getCurrentAudioInputDevice(): InputDeviceInfo`
+    * `getAvailableAudioInputDevices(): InputDeviceInfo[]`
+    * `selectAudioInputDevice(mediaDeviceInfo: InputDeviceInfo): void`
+    * `getCurrentVideoInputDevice(): InputDeviceInfo`
+    * `getAvailableVideoInputDevices(): InputDeviceInfo[]`
+    * `selectVideoInputDevice(mediaDeviceInfo: InputDeviceInfo): void`
+* Added missing type information
+    * `SendbirdCall`'s `useMedia()` method can return `undefined`
+    * `DirectCall`'s `setLocalMediaView(mediaView: HTMLMediaElement)`
+    * `DirectCall`'s `setRemoteMediaView(mediaView: HTMLMediaElement)`
+* Added webhook support
+    * Add `handleWebhookData(data: WebhookData): void` to SendBirdCall
+    * Add `WebhookData` interface
+
 ### 1.2.1 (July 21, 2020)
 * Buf fix
     * Fixed the unexpected exceptions in safari.
