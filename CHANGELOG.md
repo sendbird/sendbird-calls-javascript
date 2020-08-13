@@ -1,4 +1,8 @@
 # Change Log
+### 1.2.3 (August 13, 2020)
+* Bug fix
+    * Fixed the unexpected exceptions.
+* Improved stability
 ### 1.2.2 (July 28, 2020)
 * Replaced MediaDeviceInfo with InputDeviceInfo in following `SendBirdCall` methods
     * `getCurrentAudioInputDevice(): InputDeviceInfo`

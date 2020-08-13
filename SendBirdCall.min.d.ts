@@ -1,4 +1,4 @@
-/** 1.2.2 */
+/** 1.2.3 */
 
 // eslint-disable-next-line no-undef
 export as namespace SendBirdCall;
@@ -238,6 +238,7 @@ export interface MediaAccess {
   dispose(): void;
 }
 
+/* eslint-disable babel/camelcase */
 export interface WebhookData {
   category: string;
   occured_at: number;
@@ -251,3 +252,4 @@ export interface WebhookData {
   };
   [key: string]: any;
 }
+/* eslint-enable babel/camelcase */
