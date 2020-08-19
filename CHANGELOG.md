@@ -1,4 +1,7 @@
 # Change Log
+### 1.2.4 (August 19, 2020)
+* Bug fix
+    * Fixed the connection problem with Android SDK.
 ### 1.2.3 (August 13, 2020)
 * Bug fix
     * Fixed the unexpected exceptions.
