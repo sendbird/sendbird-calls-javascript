@@ -2,6 +2,7 @@
 
 
 [![minified size](https://img.shields.io/bundlephobia/min/sendbird-calls)](https://img.shields.io/bundlephobia/min/sendbird-calls)
+[![minzipped size](https://img.shields.io/bundlephobia/minzip/sendbird-calls)](https://img.shields.io/bundlephobia/minzip/sendbird-calls)
 [![npm version](https://badge.fury.io/js/sendbird-calls.svg)](https://badge.fury.io/js/sendbird-calls)
 [![Commercial License](https://img.shields.io/badge/license-Commercial-brightgreen.svg)](https://github.com/sendbird/sendbird-calls-javascript/blob/master/LICENSE.md)
 
