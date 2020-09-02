@@ -1,4 +1,7 @@
 # Change Log
+### 1.2.5 (September 2, 2020)
+* Enhanced prerequisite check in `init()`.
+* Improved stability.
 ### 1.2.4 (August 19, 2020)
 * Bug fix
     * Fixed the connection problem with Android SDK.
