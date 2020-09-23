@@ -1,4 +1,4 @@
-/** 1.2.5 */
+/** 1.3.0 */
 
 // eslint-disable-next-line no-undef
 export as namespace SendBirdCall;
@@ -10,6 +10,9 @@ export function connectWebSocket(): Promise<void>;
 export function addListener(id: string, listener: SendBirdCallListener): void;
 export function removeListener(id: string): void;
 export function removeAllListeners(): void;
+export function addRecordingListener(id: string, listener: SendBirdCallRecordingListener): void;
+export function removeRecordingListener(id: string): void;
+export function removeAllRecordingListeners(): void;
 export function dial(params: DialParams, callback?: DialHandler): DirectCall;
 export function createDirectCallLogListQuery(params?: DirectCallLogListQueryParams): DirectCallLogListQuery;
 export function getCurrentAudioInputDevice(): InputDeviceInfo;
@@ -31,6 +34,8 @@ export function getOngoingCallCount(): number;
 export function setRingingTimeout(timeout: number): void;
 export function setCallConnectionTimeout(timeout: number): void;
 export function handleWebhookData(data: WebhookData): void;
+export function addDirectCallSound(type: SoundType, url: string): Promise<boolean>;
+export function removeDirectCallSound(type: SoundType): boolean;
 export function getCall(callId: string): DirectCall;
 export const sdkVersion: string;
 export const appId: string;
@@ -52,6 +57,13 @@ export enum LoggerLevel {
   ERROR = 'ERROR',
   WARNING = 'WARNING',
   INFO = 'INFO'
+}
+
+export enum SoundType {
+  DIALING = 'DIALING',
+  RINGING = 'RINGING',
+  RECONNECTING = 'RECONNECTING',
+  RECONNECTED = 'RECONNECTED',
 }
 
 export enum DirectCallUserRole {
@@ -88,6 +100,12 @@ export enum ErrorCode {
   INTERNAL_SERVER_ERROR= 1800207,
   ERR_MALFORMED_DATA= 1800208,
 
+  // Error for take snapshot
+  ERR_CAPTURE_NOT_ALLOWED_ON_AUDIO_CALL = 1800600,
+  ERR_VIDEO_VIEW_NOT_READY = 1800601,
+  ERR_VIDEO_CALL_NOT_CONNECTED_YET = 1800602,
+  ERR_FAILED_TO_GET_IMAGE_FROM_VIDEO_STREAM = 1800603,
+
   // General
   INVALID_PARAMETER_VALUE= 1800300,
   INVALID_PARAMETER_TYPE= 1800301,
@@ -101,7 +119,18 @@ export enum ErrorCode {
   ERR_CALLEE_DOES_NOT_EXIST= 1400103,
   ERR_DIAL_MYSELF= 1400104,
   ERR_NO_PERMISSION= 1400105,
-  ERR_CALLEE_NEVER_AUTHENTICATE= 1400106
+  ERR_CALLEE_NEVER_AUTHENTICATE= 1400106,
+
+  // Recording
+  ERR_CALL_NOT_CONNECTED_YET = 1800610,
+  ERR_WRONG_RECORDING_TYPE_FOR_AUDIO_CALL = 1800611,
+  ERR_RECORDING_ALREADY_IN_PROGRESS = 1800612,
+  ERR_FAILED_TO_OPEN_FILE = 1800613,
+  ERR_FAILED_TO_START_RECORDING = 1800614,
+  ERR_FAILED_TO_STOP_RECORDING = 1800615,
+  ERR_NOT_SUPPORTED_BROWSER_FOR_RECORDING = 1800616,
+  ERR_INVALID_RECORDING_TYPE = 1800617,
+  ERR_NOT_SUPPORTED_OS_VERSION_FOR_RECORDING = 1800618,
 }
 
 export interface SendBirdCallListener {
@@ -109,6 +138,11 @@ export interface SendBirdCallListener {
   onAudioInputDeviceChanged: ((currentAudioInputDevice: InputDeviceInfo, availableAudioInputDevices: InputDeviceInfo[]) => void) | null;
   onAudioOutputDeviceChanged: ((currentAudioOutputDevice: MediaDeviceInfo, availableAudioOutputDevices: MediaDeviceInfo[]) => void) | null;
   onVideoInputDeviceChanged: ((currentVideoInputDevice: InputDeviceInfo, availableVideoInputDevices: InputDeviceInfo[]) => void) | null;
+}
+
+export interface SendBirdCallRecordingListener {
+  onRecordingSucceeded: ((callId: string, recordingId: string, options: DirectCallRecordOption, fileName?: string) => void) | null;
+  onRecordingFailed: ((callId: string, recordingId: string, error) => void) | null;
 }
 
 export interface DirectCall {
@@ -156,9 +190,15 @@ export interface DirectCall {
   muteMicrophone(): void;
   unmuteMicrophone(): void;
 
+  captureLocalVideoView(callback?: CaptureVideoViewHandler): Promise<CaptureVideoViewResult>;
+  captureRemoteVideoView(callback?: CaptureVideoViewHandler): Promise<CaptureVideoViewResult>;
+
   updateCustomItems(customItems: CustomItems, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
   deleteCustomItems(customItemsKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>;
   deleteAllCustomItems(callback?: CustomItemsHandler): Promise<CustomItemsResult>;
+
+  startRecording(options: DirectCallRecordOption): string;
+  stopRecording(recordingId: string): boolean;
 }
 
 export interface DirectCallOption {
@@ -216,6 +256,13 @@ export interface CustomItemsResult {
   readonly affectedKeys: string[];
 }
 
+export type CaptureVideoViewHandler = (result?: CaptureVideoViewResult, error?: Error) => void;
+export interface CaptureVideoViewResult {
+  readonly width: number;
+  readonly height: number;
+  readonly data: string;
+}
+
 export interface User {
   readonly userId: string;
   readonly nickname: string;
@@ -236,6 +283,24 @@ export interface CustomItems {
 
 export interface MediaAccess {
   dispose(): void;
+}
+
+export interface DirectCallRecordOption {
+  callId: string;
+  recordingType: string;
+  fileName?: string;
+}
+
+declare const DirectCallRecordOption: {
+  new(option: DirectCallRecordOption): DirectCallRecordOption;
+};
+
+export enum RecordingType {
+  REMOTE_AUDIO_AND_VIDEO = 'remote_audio_and_video',
+  REMOTE_AUDIO_ONLY = 'remove_audio_only',
+  LOCAL_REMOTE_AUDIOS = 'local_remote_audios',
+  LOCAL_AUDIO_REMOTE_AUDIO_AND_VIDEO = 'local_audio_remote_audio_and_video',
+  LOCAL_AUDIO_AND_VIDEO_REMOTE_AUDIO = 'local_audio_and_video_remote_audio',
 }
 
 /* eslint-disable babel/camelcase */

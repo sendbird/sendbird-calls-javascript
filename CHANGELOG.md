@@ -1,4 +1,31 @@
 # Change Log
+### 1.3.0 (September 23, 2020)
+* Added snapshot feature
+    * Below methods are added in `DirectCall`
+        * `captureLocalVideoView(callback?: CaptureVideoViewHandler): Promise<CaptureVideoViewResult>`
+        * `captureRemoteVideoView(callback?: CaptureVideoViewHandler): Promise<CaptureVideoViewResult>`
+* Added recording feature
+    * Below methods are added in `SendBirdCall`
+        * `addRecordingListener(id: string, listener: SendBirdCallRecordingListener): void`
+        * `removeRecordingListener(id: string): void`
+        * `removeAllRecordingListeners(): void`
+    * Below methods are added in `DirectCall`
+        * `startRecording(options: DirectCallRecordOption): string`
+        * `stopRecording(recordingId: string): boolean`
+    * Below constructor is added in `SendBirdCall`
+        * `DirectCallRecordOption`
+* Added sound effect feature
+    * Below property is added in `SendBirdCall`
+        * `SoundType`
+    * Below methods are added in `SendBirdCall`
+        * `addDirectCallSound(type: SoundType, url: string): Promise<boolean>`
+        * `removeDirectCallSound(type: SoundType): boolean`
+* Improved validation of `customItems` interfaces. Only string keys/values are available for `customItems` or `customItemsKeys` arguments of,
+    * `updateCustomItems(callId: string, customItems: CustomItems, callback?: CustomItemsHandler): Promise<CustomItemsResult>` in `SendBirdCall`
+    * `deleteCustomItems(callId: string, customItemKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>` in `SendBirdCall`
+    * `updateCustomItems(customItems: CustomItems, callback?: CustomItemsHandler): Promise<CustomItemsResult>` in `DirectCall`
+    * `deleteCustomItems(customItemsKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>` in `DirectCall`
+
 ### 1.2.5 (September 2, 2020)
 * Enhanced prerequisite check in `init()`.
 * Improved stability.
