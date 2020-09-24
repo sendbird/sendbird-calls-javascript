@@ -431,6 +431,42 @@ query.next((directCallLog) => {
 |params.myRole     | Returns call logs of the specified role. (e.g. if myRole is `'dc_callee'`, query will return only the callee’s call logs.)                                                                                                                                                                                               |
 |params.endResults | Returns the call logs for specified results. If more than one result is specified, they are processed as `OR` condition and all call logs corresponding with the specified end results will be returned. For example, if endResults is `['NO_ANSWER'`, `'CANCELED']`, only the `NO_ANSWER` and `CANCELED` call logs will be returned.|
 
+## Sound Effect
+### Sound types
+| Type         | Description                                                                                                                                       |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| DIALING      | Refers to a sound that is played on a caller’s side when the caller makes a call to a callee.                                                     |
+| RINGING      | Refers to a sound that is played on a callee’s side when receiving a call.                                                                        |
+| RECONNECTING | Refers to a sound that is played when a connection is lost, but immediately tries to reconnect. Users are also allowed to customize the ringtone. |
+| RECONNECTED  | Refers to a sound that is played when a connection is re-established.                                                                             |
+
+### Add sound
+| Method               | Description                                                                           |
+|----------------------|---------------------------------------------------------------------------------------|
+| addDirectCallSound() | Adds a specific sound such as a ringtone and an alert tone with URL to a direct call. |
+##### Parameters
+| Parameter | Type      | Description                                                                                                                          |
+|-----------|-----------|--------------------------------------------------------------------------------------------------------------------------------------|
+| type      | SoundType | Specifies the sound type to be used according to the event.                                                                          |
+| url       | string    | Specifies the URL of the sound file. You can use the URI of the asset on the server or ObjectURL created by `URL.createObjectURL()`. |
+
+>Note: In modern web browsers, they have their own autoplay policies and can block the `addDirectCallSound()` method from being directly executed.
+To solve this problem, for Chrome and Firefox, the `addDirectCallSound()` method should be called after a user’s event such as clicking a button. For Safari, you have to call the `addDirectCallSound()` method in the event listener of a user’s event such as `onclick()` .
+```javascript
+document.querySelector('#yourButton').addEventListener('click', function() {
+  SendBirdCall.addDirectCallSound(SendBirdCall.SoundType.DIALING, RESOURCE_URL);
+});
+``` 
+
+### Remove sound
+| Method                                 | Description                                  |
+|----------------------------------------|----------------------------------------------|
+| removeDirectCallSound(type: SoundType) | Removes a specific sound from a direct call. |
+##### Parameters
+| Parameter | Type      | Description                                                    |
+|-----------|-----------|----------------------------------------------------------------|
+| type      | SoundType | Specifies the type of sound to be used according to the event. |
+
 ## Additional information: call results
 Information relating the end result of a call can be obtained at any time via the  `directCall.endResult`  property, best accessed within the `onEnded()` callback.  
 
