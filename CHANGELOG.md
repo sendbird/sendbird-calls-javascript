@@ -1,4 +1,14 @@
 # Change Log
+### 1.4.0 (Nov 3, 2020 UTC)
+* Added remote recording progress event.
+    * Below properties are added in `DirectCall`:
+        * `onRemoteRecordingStatusChanged: ((call: DirectCall) => void) | null`
+        * `localRecordingStatus: RecordingStatus`
+        * `remoteRecordingStatus: RecordingStatus`
+    * Below enum is added in `SendBirdCall`:
+        * `RecordingStatus`
+* Improved stability
+
 ### 1.3.0 (September 23, 2020)
 * Added snapshot feature
     * Below methods are added in `DirectCall`

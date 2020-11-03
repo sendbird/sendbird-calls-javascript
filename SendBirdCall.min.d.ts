@@ -1,4 +1,4 @@
-/** 1.3.0 */
+/** 1.4.0 */
 
 // eslint-disable-next-line no-undef
 export as namespace SendBirdCall;
@@ -155,6 +155,7 @@ export interface DirectCall {
   onRemoteVideoSettingsChanged: ((call: DirectCall) => void) | null;
   onCustomItemsUpdated: ((call: DirectCall, updatedKeys: string[]) => void) | null;
   onCustomItemsDeleted: ((call: DirectCall, deletedKeys: string[]) => void) | null;
+  onRemoteRecordingStatusChanged: ((call: DirectCall) => void) | null;
   onEnded: ((call: DirectCall) => void) | null;
 
   readonly callId: string;
@@ -174,6 +175,8 @@ export interface DirectCall {
   readonly endResult: DirectCallEndResult;
   readonly callLog: DirectCallLog;
   readonly customItems: CustomItems;
+  readonly localRecordingStatus: RecordingStatus;
+  readonly remoteRecordingStatus: RecordingStatus;
   readonly localMediaView: HTMLMediaElement;
   readonly remoteMediaView: HTMLMediaElement;
 
@@ -198,7 +201,7 @@ export interface DirectCall {
   deleteAllCustomItems(callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 
   startRecording(options: DirectCallRecordOption): string;
-  stopRecording(recordingId: string): boolean;
+  stopRecording(recordId: string): boolean;
 }
 
 export interface DirectCallOption {
@@ -287,7 +290,7 @@ export interface MediaAccess {
 
 export interface DirectCallRecordOption {
   callId: string;
-  recordingType: string;
+  recordingType: RecordingType;
   fileName?: string;
 }
 
@@ -297,10 +300,15 @@ declare const DirectCallRecordOption: {
 
 export enum RecordingType {
   REMOTE_AUDIO_AND_VIDEO = 'remote_audio_and_video',
-  REMOTE_AUDIO_ONLY = 'remove_audio_only',
+  REMOTE_AUDIO_ONLY = 'remote_audio_only',
   LOCAL_REMOTE_AUDIOS = 'local_remote_audios',
   LOCAL_AUDIO_REMOTE_AUDIO_AND_VIDEO = 'local_audio_remote_audio_and_video',
   LOCAL_AUDIO_AND_VIDEO_REMOTE_AUDIO = 'local_audio_and_video_remote_audio',
+}
+
+export enum RecordingStatus {
+  NONE = 'none',
+  RECORDING = 'recording',
 }
 
 /* eslint-disable babel/camelcase */
