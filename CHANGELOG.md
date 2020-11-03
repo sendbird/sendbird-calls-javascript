@@ -1,4 +1,7 @@
 # Change Log
+### 1.4.1 (Nov 3, 2020 UTC)
+* Improved stability
+
 ### 1.4.0 (Nov 3, 2020 UTC)
 * Added remote recording progress event.
     * Below properties are added in `DirectCall`:
