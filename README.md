@@ -149,19 +149,25 @@ call.onCustomItemsUpdated = (call, updatedKeys) => {
 call.onCustomItemsDeleted = (call, deletedKeys) => {
   ...
 };
+
+call.onRemoteRecordingStatusChanged = (call) => {
+  ...
+};
 ```
 
 | Event Listener                         | Invocation Criteria |
 |--------------------------------|--------------|
-| onEstablished                | The callee accepted the call using the method `call.accept()`, but neither the caller or callee’s devices are as of yet connected to media devices. |
-| onConnected                  | Media devices (e.g. microphone and speakers) between the caller and callee are connected and the voice or video call can begin. |
-| onEnded                      | The call has ended on either the caller or the callee’s devices. This is triggered automatically when either party runs the method `call.end()`. This event listener is also invoked if the call is ended for other reasons. See the bottom of this readme for a list of all possible reasons for call termination.  |
-| onRemoteAudioSettingsChanged | The other party changed their audio settings. |
-| onRemoteVideoSettingsChanged | The other party changed their video settings. |
-| onCustomItemsUpdated         | One or more of `call`’s custom items (metadata) have been updated. |
-| onCustomItemsDeleted         | One or more of `call`’s custom items (metadata) have been deleted. |
-| onReconnecting               | `call` started attempting to reconnect to the other party after a media connection disruption. |
-| onReconnected                | The disrupted media connection reconnected. |
+| onEstablished                 | The callee accepted the call using the method `call.accept()`, but neither the caller or callee’s devices are as of yet connected to media devices. |
+| onConnected                   | Media devices (e.g. microphone and speakers) between the caller and callee are connected and the voice or video call can begin. |
+| onEnded                       | The call has ended on either the caller or the callee’s devices. This is triggered automatically when either party runs the method `call.end()`. This event listener is also invoked if the call is ended for other reasons. See the bottom of this readme for a list of all possible reasons for call termination.  |
+| onRemoteAudioSettingsChanged  | The other party changed their audio settings. |
+| onRemoteVideoSettingsChanged  | The other party changed their video settings. |
+| onCustomItemsUpdated          | One or more of `call`’s custom items (metadata) have been updated. |
+| onCustomItemsDeleted          | One or more of `call`’s custom items (metadata) have been deleted. |
+| onReconnecting                | `call` started attempting to reconnect to the other party after a media connection disruption. |
+| onReconnected                 | The disrupted media connection reconnected. |
+| onRemoteRecordingStatusChanged | The other user’s recording status has been changed. |
+
 
 
 ## Make a call
