@@ -16,7 +16,7 @@ The SendBird Calls JavaScript SDK provides a framework to make and receive voice
 
 ## SDK Prerequisites
 * [Modern browsers implementing WebRTC APIs](https://caniuse.com/#feat=rtcpeerconnection) are supported; IE is not.
-* Edge is not supported, though it might be supported later.
+* Edge(<= 44) is not supported, though it might be supported later.
 
 ```javascript
 // browser console
