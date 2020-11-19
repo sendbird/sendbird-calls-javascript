@@ -693,70 +693,78 @@ query.next((directCallLog) => {
 
 | Method & Property| Description |
 |---|---|
-|next()| Used to query call history from `SendBirdCall` server.                                                 |
-|hasNext| If true, there is more call history to be retrieved.|
-|isLoading| If true, call history is being retrieved from SendBirdCall server. |
+|next()| Used to query call history from `SendBirdCall` server.|
+|hasNext| If **true**, there is more call history to be retrieved.|
+|isLoading| If **true**, call history is being retrieved from Sendbird Calls server. |
 |params.limit| Specifies the number of call logs to return at once. |
-|params.myRole| Returns call logs of the specified role. (e.g. if myRole is `'dc_callee'`, query will return only the callee’s call logs.) |
-|params.endResults| Returns the call logs for specified results. If more than one result is specified, they are processed as `OR` condition and all call logs corresponding with the specified end results will be returned. For example, if endResults is `['NO_ANSWER'`, `'CANCELED']`, only the `NO_ANSWER` and `CANCELED` call logs will be returned.|
+|params.myRole| Returns call logs of the specified role. For example, if `myRole` is **dc_callee**, the query will return only the callee’s call logs.|
+|params.endResults| Returns the call logs for specified results. If more than one result is specified, they are processed as `OR` condition and all call logs corresponding with the specified end results will be returned. For example, if the `endResults` is set as **NO_ANSWER** or **CANCELED**, only the **NO_ANSWER** and **CANCELED** call logs will be returned.|
 
-## Sound Effect
-### Sound types
-| Type         | Description                                                                                                                                       |
-|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-| DIALING      | Refers to a sound that is played on a caller’s side when the caller makes a call to a callee.                                                     |
-| RINGING      | Refers to a sound that is played on a callee’s side when receiving a call.                                                                        |
+### Sound effect
+
+#### - Sound types
+
+| Type | Description|
+|---|---|
+| DIALING | Refers to a sound that is played on a caller’s side when the caller makes a call to a callee.|
+| RINGING | Refers to a sound that is played on a callee’s side when receiving a call.|
 | RECONNECTING | Refers to a sound that is played when a connection is lost, but immediately tries to reconnect. Users are also allowed to customize the ringtone. |
-| RECONNECTED  | Refers to a sound that is played when a connection is re-established.                                                                             |
+| RECONNECTED  | Refers to a sound that is played when a connection is re-established.|
 
-### Add sound
-| Method               | Description                                                                           |
-|----------------------|---------------------------------------------------------------------------------------|
-| addDirectCallSound() | Adds a specific sound such as a ringtone and an alert tone with URL to a direct call. |
-##### Parameters
-| Parameter | Type      | Description                                                                                                                          |
-|-----------|-----------|--------------------------------------------------------------------------------------------------------------------------------------|
-| type      | SoundType | Specifies the sound type to be used according to the event.                                                                          |
-| url       | string    | Specifies the URL of the sound file. You can use the URI of the asset on the server or ObjectURL created by `URL.createObjectURL()`. |
+#### - Add sound
 
->Note: In modern web browsers, they have their own autoplay policies and can block the `addDirectCallSound()` method from being directly executed.
-To solve this problem, for Chrome and Firefox, the `addDirectCallSound()` method should be called after a user’s event such as clicking a button. For Safari, you have to call the `addDirectCallSound()` method in the event listener of a user’s event such as `onclick()` .
+|Method|Description|
+|---|---|
+|addDirectCallSound() | Adds a specific sound such as a ringtone and an alert tone with URL to a direct call. |
+
+|Parameter|Type|Description|
+|---|---|---|
+|type |SoundType| Specifies the sound type to be used according to the event.|
+|url| string| Specifies the URL of the sound file. You can use the URI of the asset on the server or **ObjectURL** created by `URL.createObjectURL()`. |
+
+>**Note**: In modern web browsers, they have their own autoplay policies and can block the `addDirectCallSound()` method from being directly executed. To solve this problem for `Chrome` and `Firefox`, the `addDirectCallSound()` method should be called after a user’s event such as clicking a button. For `Safari`, you have to call the `addDirectCallSound()` method in the event listener of a user’s event such as `onclick()`. 
+
 ```javascript
 document.querySelector('#yourButton').addEventListener('click', function() {
-  SendBirdCall.addDirectCallSound(SendBirdCall.SoundType.DIALING, RESOURCE_URL);
+    SendBirdCall.addDirectCallSound(SendBirdCall.SoundType.DIALING, RESOURCE_URL);
 });
 ``` 
 
-### Remove sound
-| Method                                 | Description                                  |
-|----------------------------------------|----------------------------------------------|
+#### - Remove sound
+
+| Method | Description|
+|---|---|
 | removeDirectCallSound(type: SoundType) | Removes a specific sound from a direct call. |
-##### Parameters
-| Parameter | Type      | Description                                                    |
-|-----------|-----------|----------------------------------------------------------------|
-| type      | SoundType | Specifies the type of sound to be used according to the event. |
 
-## Additional information: call results
-Information relating the end result of a call can be obtained at any time via the  `directCall.endResult`  property, best accessed within the `onEnded()` callback.  
+| Parameter |Type|Description|
+|---|---|---|
+| type| SoundType| Specifies the type of sound to be used according to the event. |
 
+<br />
 
-| EndResult        | Description                                                                                                            |
-|------------------|------------------------------------------------------------------------------------------------------------------------|
-|NO_ANSWER |	The callee failed to either accept or decline the call within a specific amount of time.|
-|CANCELED | The caller canceled the call before the callee could accept or decline.|
-|DECLINED |	The callee declined the call.|
-|COMPLETED |	The call ended after either party ended it|
-|TIMED_OUT | The SendBird server failed to establish a media session between the caller and callee within a specific amount of time.|
-|CONNECTION_LOST | The data stream from either the caller or the callee has stopped due to a WebRTC connection issue.|
-|DIAL_FAILED | The dial() method call has failed. |
-|ACCEPT_FAILED | The accept() method call has failed.|
-|OTHER_DEVICE_ACCEPTED | The incoming call was accepted on a different device. This device received an incoming call notification, but the call ended when a different device accepted it.|
+## Appendix
 
-## Encoding Configurations
+### Call results
 
-| Category           | Value  | Note                     |
-|--------------------|--------|--------------------------|
-| Frames per Second  | 24 fps |                          |
-| Maximum Resolution | 720p   | 1280x720 px; standard HD |
-| Audio Codec        | OPUS   |                          |
-| Video Codec        | VP8    |                          |
+Information relating the end result of a call can be obtained at any time through the `directCall.endResult` property, best accessed within the `onEnded()` callback.
+
+| EndResult | Description  |
+|---|---|
+|NO_ANSWER|The callee failed to either accept or decline the call within a specific amount of time.|
+|CANCELED|The caller canceled the call before the callee could accept or decline.|
+|DECLINED|The callee declined the call.|
+|COMPLETED|The call ended after either party ended it|
+|TIMED_OUT|Sendbird Calls server failed to establish a media session between the caller and callee within a specific amount of time.|
+|CONNECTION_LOST|The data stream from either the caller or the callee has stopped due to a `WebRTC` connection issue.|
+|DIAL_FAILED|The `dial()` method call has failed.|
+|ACCEPT_FAILED|The `accept()` method call has failed.|
+|OTHER_DEVICE_ACCEPTED|The incoming call was accepted on a different device. This device received an incoming call notification, but the call ended when a different device accepted it.|
+
+### Encoding configurations
+
+|Category|Value| Note|
+|---|---|---|
+|Frames per Second | 24 fps ||
+|Maximum Resolution| 720p| 1280x720 px; standard HD |
+|Audio Codec| OPUS| |
+|Video Codec | VP8||
