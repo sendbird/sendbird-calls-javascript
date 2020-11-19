@@ -20,7 +20,7 @@
 
 **SendBird Calls** is the latest addition to our product portfolio. It enables real-time calls between users within a Sendbird application. SDKs are provided for iOS, Android, and JavaScript. Using any one of these, developers can quickly integrate voice and video call functions into their own client apps, allowing users to make and receive web-based real-time voice and video calls on the Sendbird platform.
 
-> If you need any help in resolving any issues or have questions, please visit [our community](https://community.sendbird.com)
+> If you need any help in resolving any issues or have questions, please visit [our community](https://community.sendbird.com).
 
 ### How it works
 
