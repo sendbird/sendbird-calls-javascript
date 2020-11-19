@@ -206,7 +206,7 @@ call.onRemoteRecordingStatusChanged = (call) => {
 |---|---|
 |onEstablished|The callee accepted the call using the method `call.accept()`. However, neither the caller or callee’s devices are connected to media devices yet.|
 |onConnected|A connection is established between the caller and callee’s media devices such as microphones and speakers. The voice or video call can begin.|
-|onEnded | The call has ended on either the caller or the callee’s devices. When the `call.end()` method is used from either party, a call ends. The `call.end()` event listener is also invoked if the call is ended for other reasons. Refer to [Calls result] in Appendix for all possible reasons for call termination. |
+|onEnded | The call has ended on either the caller or the callee’s devices. When the `call.end()` method is used from either party, a call ends. The `call.end()` event listener is also invoked if the call is ended for other reasons. Refer to [Calls result](#call-results) in [Appendix](#appendix) for all possible reasons for call termination. |
 |onRemoteAudioSettingsChanged| The other party changed their audio settings. |
 |onRemoteVideoSettingsChanged| The other party changed their video settings. |
 |onCustomItemsUpdated| One or more of `call`’s custom items that are used to store additional information have been updated.|
