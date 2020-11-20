@@ -125,7 +125,7 @@ SendBirdCall.connectWebSocket()
 
 There are two types of event handlers the SDK provides for a client app to respond to various events: a device-specific listener and a call-specific listener.
 
-#### - Device-specific Listener
+#### - Device-specific listener
 
 Register a device-specific event handler using the `SendBirdCall.addListener()` method. It is recommended to add the event handler during initialization because it is a prerequisite for detecting an `onRinging()` event. The code below shows the way device-wide events such as incoming calls are handled once device-specific event is added. 
 
@@ -155,7 +155,7 @@ SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
 |onAudioOutputDeviceChanged | Audio output devices have changed. |
 |onVideoInputDeviceChanged | Video input devices have changed. |
 
-#### - Call-specific Listener
+#### - Call-specific listener
 
 Register a call-specific event handler by attaching an event handler function directly to the properties of the call object. Responding to call-specific events such as establishing a successful call connection is then handled as shown below.
 
@@ -206,7 +206,7 @@ call.onRemoteRecordingStatusChanged = (call) => {
 |---|---|
 |onEstablished|The callee accepted the call using the method `call.accept()`. However, neither the caller or callee’s devices are connected to media devices yet.|
 |onConnected|A connection is established between the caller and callee’s media devices such as microphones and speakers. The voice or video call can begin.|
-|onEnded | The call has ended on either the caller or the callee’s devices. When the `call.end()` method is used from either party, a call ends. The `call.end()` event listener is also invoked if the call is ended for other reasons. Refer to [Calls result](#call-results) in [Appendix](#appendix) for all possible reasons for call termination. |
+|onEnded | The call has ended on either the caller or the callee’s devices. When the `call.end()` method is used from either party, a call ends. The `call.end()` event listener is also invoked if the call is ended for other reasons. Refer to [Call results](#call-results) in [Appendix](#appendix) for all possible reasons for call termination. |
 |onRemoteAudioSettingsChanged| The other party changed their audio settings. |
 |onRemoteVideoSettingsChanged| The other party changed their video settings. |
 |onCustomItemsUpdated| One or more of `call`’s custom items that are used to store additional information have been updated.|
