@@ -26,7 +26,7 @@
 
 Sendbird Calls SDK for JavaScript provides a framework to make and receive voice and video calls. **Direct calls** in the SDK refers to one-to-one calls. To make a direct voice or video call, the caller specifies the user ID of the intended callee, and dials. Upon dialing, all of the callee’s authenticated devices will receive notifications for an incoming call. The callee then can choose to accept the call from any one of the devices. When the call is accepted, a connection is established between the devices of the caller and the callee. This marks the start of a direct call. Call participants can mute themselves, or call with either or both of the audio and video by using output devices such as speaker and microphone for audio, and front, rear camera for video. A call may be ended by either party. The [Sendbird Dashboard](https://dashboard.sendbird.com/auth/signin) displays call logs in the Calls menu for dashboard owners and admins to review.
 
-### For further reference
+### More about Sendbird Calls SDK for JavaScript
 
 Find out more about Sendbird Calls for JavaScript on [Calls SDK for JavaScript doc](https://sendbird.com/docs/calls/v1/javascript/getting-started/about-calls-sdk).
 
