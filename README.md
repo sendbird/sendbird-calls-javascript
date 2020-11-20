@@ -10,7 +10,7 @@
   1. [Introduction](#introduction)
   1. [Before getting started](#before-getting-started)
   1. [Getting started](#getting-started)
-  1. [Make your first call](#make-your-first-call)
+  1. [Making your first call](#making-your-first-call)
   1. [Implementation guide](#implementation-guide)  
   1. [Appendix](#appendix)
 
@@ -18,7 +18,7 @@
 
 ## Introduction
 
-**SendBird Calls** is the latest addition to our product portfolio. It enables real-time calls between users within a Sendbird application. SDKs are provided for iOS, Android, and JavaScript. Using any one of these, developers can quickly integrate voice and video call functions into their own client apps, allowing users to make and receive web-based real-time voice and video calls on the Sendbird platform.
+**Sendbird Calls** is the latest addition to our product portfolio. It enables real-time calls between users within a Sendbird application. SDKs are provided for iOS, Android, and JavaScript. Using any one of these, developers can quickly integrate voice and video call functions into their own client apps, allowing users to make and receive web-based real-time voice and video calls on the Sendbird platform.
 
 > If you need any help in resolving any issues or have questions, please visit [our community](https://community.sendbird.com).
 
@@ -87,7 +87,7 @@ When a user makes or receives a call for the first time on a given website, the 
 
 <br />
 
-## Make your first call
+## Making your first call
 
 Follow the step-by-step instructions below to authenticate and make your first call. 
 
