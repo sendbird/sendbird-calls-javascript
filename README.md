@@ -483,7 +483,7 @@ call.setRemoteMediaView(document.getElementById('remote_video_element_id'));
 
 Register a listener first to receive incoming calls. Accept or decline incoming calls by using the `call.accept()` or the `call.end()` methods. If the call is accepted, a media session will automatically be established.
 
-Before accepting any calls, event listeners such as `onEstablished`, onConnected must be registered. Once registered, these listeners enable reacting to in-call events through callbacks methods.
+Before accepting any calls, event listeners such as `onEstablished`, `onConnected` must be registered. Once registered, these listeners enable reacting to in-call events through callbacks methods.
 
 ```javascript
 SendBirdCall.addListener(UNIQUE_HANDLER_ID, {
