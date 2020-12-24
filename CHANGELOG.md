@@ -1,4 +1,11 @@
 # Change Log
+### 1.5.0 (Dec 24, 2020 UTC)
+* Added support for integration with Sendbird Chat
+    * Added `sendBirdChatOptions` to `DialParams`
+* Added support for `Call summary` on the dashboard.
+* Improved backend scalability
+* Enhanced security for compliance
+
 ### 1.4.1 (Nov 3, 2020 UTC)
 * Improved stability
 

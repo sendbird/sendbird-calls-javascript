@@ -1,4 +1,4 @@
-/** 1.4.1 */
+/** 1.5.0 */
 
 // eslint-disable-next-line no-undef
 export as namespace SendBirdCall;
@@ -46,6 +46,7 @@ export interface DialParams {
   isVideoCall: boolean;
   callOption: DirectCallOption;
   customItems?: CustomItems;
+  sendBirdChatOptions?: SendBirdChatOptions;
 }
 
 export interface AcceptParams {
@@ -284,15 +285,26 @@ export interface CustomItems {
   [key: string]: string;
 }
 
+export interface SendBirdChatOptions {
+  channelUrl: string;
+}
+
 export interface MediaAccess {
   dispose(): void;
 }
 
-export interface DirectCallRecordOption {
+export interface RecordOption {
   callId: string;
   recordingType: RecordingType;
   fileName?: string;
 }
+
+declare const RecordOption: {
+  new(option: RecordOption): RecordOption;
+};
+
+
+export interface DirectCallRecordOption extends RecordOption {}
 
 declare const DirectCallRecordOption: {
   new(option: DirectCallRecordOption): DirectCallRecordOption;
