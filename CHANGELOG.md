@@ -1,4 +1,9 @@
 # Change Log
+
+### 1.5.1 (Dec 28, 2020 UTC)
+* Bug fix
+    * Fixed an unexpected exception.
+
 ### 1.5.0 (Dec 24, 2020 UTC)
 * Added support for integration with Sendbird Chat
     * Added `sendBirdChatOptions` to `DialParams`
