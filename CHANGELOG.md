@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.5.2 (Jan 14, 2021 UTC)
+* Bug fix
+    * Fixed an unexpected exception.
+
 ### 1.5.1 (Dec 28, 2020 UTC)
 * Bug fix
     * Fixed an unexpected exception.
