@@ -1,4 +1,4 @@
-/** 1.5.2 */
+/** 1.5.3 */
 
 // eslint-disable-next-line no-undef
 export as namespace SendBirdCall;

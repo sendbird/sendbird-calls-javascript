@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.5.3 (Jan 26, 2021 UTC)
+* Bug fix
+    * Fixed doubling bug in recording.
+
 ### 1.5.2 (Jan 14, 2021 UTC)
 * Bug fix
     * Fixed an unexpected exception.
