@@ -1,5 +1,13 @@
 # Change Log
 
+### 1.5.4 (Mar 12, 2021 UTC)
+* Added suuport for screen share in `DirectCall`.
+    * Below methods are added in `DirectCall`:
+        * `startScreenShare(): Promise<void>`
+        * `stopScreenShare(): void`
+    * Below property is added in `DirectCall`:
+        * `readonly isLocalScreenShareEnabled: boolean`
+
 ### 1.6.0-beta (Feb 17, 2021 UTC)
 Sendbird Calls SDK version 1.6.0 supports the early access program for group calling. New concepts introduced in this version center around *rooms* and *participants*.
 * Added group call feature.
