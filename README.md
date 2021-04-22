@@ -41,7 +41,7 @@ This section shows the prerequisites you need to check to use Sendbird Calls SDK
 The minimum requirements for Calls SDK for JavaScript are:
 
 - [Modern browsers implementing WebRTC APIs](https://caniuse.com/#feat=rtcpeerconnection) are supported; IE is excluded.
-- Edge is not supported as of now.
+- Edge < 44 is not supported as of now.
 
 ```javascript
 // browser console

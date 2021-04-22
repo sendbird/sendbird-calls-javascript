@@ -1,5 +1,26 @@
 # Change Log
 
+### 1.6.0 (April 22, 2021 UTC)
+* Added support for group call.
+    * Below class is added in `SendBirdCall`
+        * `Room`
+    * Below methods are added in `SendBirdCall`
+        * `createRoom(params: RoomParams): Promise<Room>`
+        * `getCachedRoomById(roomId: string): Room`
+        * `fetchRoomById(roomId: string): Promise<Room>`
+    * Below interfaces are added in `SendBirdCall`
+        * `RoomParams`
+        * `EnterParams`
+        * `Participant`
+        * `LocalParticipant`
+        * `RemoteParticipant`
+    * Below enums are added in `SendBirdCall`
+        * `RoomType`
+        * `ParticipantState`
+* Bug fix
+    * Fixed an unexpected exception.
+* Improved stability.
+
 ### 1.5.4 (Mar 12, 2021 UTC)
 * Added suuport for screen share in `DirectCall`.
     * Below methods are added in `DirectCall`:

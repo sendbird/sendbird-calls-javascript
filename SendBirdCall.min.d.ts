@@ -1,6 +1,5 @@
-/** 1.5.4 */
-
-// eslint-disable-next-line no-undef
+/** 1.6.0 */
+// eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
 export function init(appId: string): void;
@@ -37,6 +36,9 @@ export function handleWebhookData(data: WebhookData): void;
 export function addDirectCallSound(type: SoundType, url: string): Promise<boolean>;
 export function removeDirectCallSound(type: SoundType): boolean;
 export function getCall(callId: string): DirectCall;
+export function createRoom(params: RoomParams): Promise<Room>;
+export function getCachedRoomById(roomId: string): Room;
+export function fetchRoomById(roomId: string): Promise<Room>;
 export const sdkVersion: string;
 export const appId: string;
 export const currentUser: User;
@@ -101,6 +103,15 @@ export enum ErrorCode {
   INTERNAL_SERVER_ERROR= 1800207,
   ERR_MALFORMED_DATA= 1800208,
 
+  // Room
+  ERR_PARTICIPANT_ALREADY_IN_ROOM = 1800700,
+  ERR_ENTERING_ROOM_STILL_IN_PROGRESS = 1800701,
+  ERR_PARTICIPANT_NOT_IN_ROOM = 1800702,
+  ERR_EXITING_ROOM_STILL_IN_PROGRESS = 1800703,
+  ERR_FAILED_TO_ESTABLISH_CONNECTION_TO_SEND_STREAM = 1800704,
+  ERR_FAILED_TO_ESTABLISH_CONNECTION_TO_RECEIVE_STREAM = 1800705,
+  ERR_LOCAL_PARTICIPANT_LOST_CONNECTION = 1800706,
+
   // Error for take snapshot
   ERR_CAPTURE_NOT_ALLOWED_ON_AUDIO_CALL = 1800600,
   ERR_VIDEO_VIEW_NOT_READY = 1800601,
@@ -132,19 +143,90 @@ export enum ErrorCode {
   ERR_NOT_SUPPORTED_BROWSER_FOR_RECORDING = 1800616,
   ERR_INVALID_RECORDING_TYPE = 1800617,
   ERR_NOT_SUPPORTED_OS_VERSION_FOR_RECORDING = 1800618,
+
+  // screen share
+  ERR_SCREEN_SHARE_RESTRICTED_FROM_AUDIO_CALL = 1800620,
+  ERR_SCREEN_SHARE_REQUEST_BEFORE_CALL_IS_CONNECTED = 1800621,
+  ERR_SCREEN_SHARE_ALREADY_IN_PROGRESS = 1800622,
+  ERR_NO_SCREEN_SHARE_EXISTS = 1800623,
+  ERR_NOT_SUPPORTED_BROWSER_FOR_SCREEN_SHARE = 1800625,
+  ERR_SCREEN_SHARE_FAILED_DUE_TO_UNKNOWN_REASON = 1800626,
+  ERR_NOT_SUPPORTED_APP_STATE_FOR_SCREEN_SHARE = 1800627,
+  ERR_PERMISSION_DENIED_FOR_SCREEN_SHARE = 1800628,
+  ERR_SELECTED_CONTENT_NOT_EXIST = 1800629,
+  ERR_SELECTED_CONTENT_INACCESSIBLE = 1800630,
+
 }
 
 export interface SendBirdCallListener {
-  onRinging: ((directCall: DirectCall) => void) | null;
-  onAudioInputDeviceChanged: ((currentAudioInputDevice: InputDeviceInfo, availableAudioInputDevices: InputDeviceInfo[]) => void) | null;
-  onAudioOutputDeviceChanged: ((currentAudioOutputDevice: MediaDeviceInfo, availableAudioOutputDevices: MediaDeviceInfo[]) => void) | null;
-  onVideoInputDeviceChanged: ((currentVideoInputDevice: InputDeviceInfo, availableVideoInputDevices: InputDeviceInfo[]) => void) | null;
+  onRinging?: ((directCall: DirectCall) => void) | null;
+  onAudioInputDeviceChanged?: ((currentAudioInputDevice: InputDeviceInfo, availableAudioInputDevices: InputDeviceInfo[]) => void) | null;
+  onAudioOutputDeviceChanged?: ((currentAudioOutputDevice: MediaDeviceInfo, availableAudioOutputDevices: MediaDeviceInfo[]) => void) | null;
+  onVideoInputDeviceChanged?: ((currentVideoInputDevice: InputDeviceInfo, availableVideoInputDevices: InputDeviceInfo[]) => void) | null;
 }
 
 export interface SendBirdCallRecordingListener {
   onRecordingSucceeded: ((callId: string, recordingId: string, options: DirectCallRecordOption, fileName?: string) => void) | null;
   onRecordingFailed: ((callId: string, recordingId: string, error) => void) | null;
 }
+
+/**
+ * Event Target
+ */
+
+interface Event {
+  readonly args?: any[];
+}
+
+declare type nullish = null | undefined;
+
+declare type ArgsType<T extends Event> = T['args'] extends nullish ? [] : T['args'];
+
+interface EventListener<T extends Event> {
+  (...args: ArgsType<T>): void;
+}
+
+declare type EventMap = Record<string, Event>;
+
+declare type EventKey<T extends EventMap> = keyof T;
+
+declare class EventTarget<T extends EventMap> {
+
+  /**
+   * Adds a listener to receive events.
+   */
+  addEventListener<K extends EventKey<T>>(type: K, callback: EventListener<T[K]>): void;
+
+  /**
+   * Alias for addEventListener
+   */
+  on: <K extends keyof T>(type: K, callback: EventListener<T[K]>) => void;
+
+  /**
+   * Adds listener to receive events once.
+   */
+  once<K extends EventKey<T>>(type: K, givenCb: EventListener<T[K]>): void;
+
+  /**
+   * Removes an added listener.
+   */
+  removeEventListener<K extends EventKey<T>>(type: K, callback: EventListener<T[K]>): void;
+
+  /**
+   * Alias for removeEventListener
+   */
+  off: <K extends keyof T>(type: K, callback: EventListener<T[K]>) => void;
+
+  /**
+   * Removes all added listeners.
+   */
+  removeAllEventListeners(): void;
+
+}
+
+/**
+ * DirectCall
+ */
 
 export interface DirectCall {
   onEstablished: ((call: DirectCall) => void) | null;
@@ -344,3 +426,221 @@ export interface WebhookData {
   [key: string]: any;
 }
 /* eslint-enable babel/camelcase */
+
+
+/**
+ * Room
+ */
+
+declare type RoomEventMap = {
+  remoteParticipantEntered: { args: [RemoteParticipant]; };
+  remoteParticipantExited: { args: [RemoteParticipant]; };
+  remoteParticipantStreamStarted: { args: [RemoteParticipant]; };
+  remoteAudioSettingsChanged: { args: [RemoteParticipant]; };
+  remoteVideoSettingsChanged: { args: [RemoteParticipant]; };
+  error: { args: [Error, Participant?] };
+};
+
+/**
+ * Called when remote participant has been entered
+ */
+export type RemoteParticipantEnteredEventListener = (participant: RemoteParticipant) => void;
+/**
+ * Called when remote participant has been exited
+ */
+export type RemoteParticipantExitedEventListener = (participant: RemoteParticipant) => void;
+/**
+ * Called when it's able to receive media stream from remote participant.
+ */
+export type RemoteParticipantStreamStartedEventListener = (participant: RemoteParticipant) => void;
+/**
+ * Called when audio settings of remote participant has been changed
+ */
+export type RemoteAudioSettingsChangedEventListener = (participant: RemoteParticipant) => void;
+/**
+ * Called when video settings of remote participant has been changed.
+ */
+export type RemoteVideoSettingsChangedEventListener = (participant: RemoteParticipant) => void;
+
+export enum RoomType {
+  /**
+   * Type of a room that supports audio and video, can have up to 6 participants.
+   */
+  LARGE_ROOM_FOR_AUDIO_ONLY = 'large_room_for_audio_only',
+  /**
+   * Type of a room that only supports audio and can have up to 20 participants.
+   */
+  SMALL_ROOM_FOR_VIDEO = 'small_room_for_video',
+}
+
+export declare class Room extends EventTarget<RoomEventMap> {
+
+  /**
+   * The ID of room
+   */
+  readonly roomId: string;
+
+  /**
+   * Room type
+   */
+  readonly roomType: RoomType;
+
+  /**
+   * Long value of the date when the room created at.
+   */
+  readonly createdAt: number;
+
+  /**
+   * The ID of user who created the room
+   */
+  readonly createdBy: string;
+
+  /**
+   * The list of all participants including local participant.
+   */
+  readonly participants: Participant[];
+
+  /**
+   * The local participant.
+   */
+  readonly localParticipant: LocalParticipant;
+
+  /**
+   * The list of remote participants.
+   */
+  readonly remoteParticipants: RemoteParticipant[];
+
+  /**
+   * Enters a room
+   */
+  enter(params: EnterParams): Promise<void>;
+
+  /**
+   * Exits a room
+   */
+  exit(): void;
+
+  /**
+   * Sets audio for a large room
+   */
+  setAudioForLargeRoom(mediaView: HTMLAudioElement): Promise<void>;
+
+}
+
+export type RoomParams = {
+  /**
+   * An enum that represents different types of a room.
+   */
+  roomType: RoomType;
+}
+
+/**
+ * A class that provides the methods to enable audio and video settings.
+ */
+export interface EnterParams {
+  /**
+   * Enables a participant's audio settings when entering a room.
+   */
+  audioEnabled: boolean;
+  /**
+   * Enables a participant's video settings when entering a room.
+   */
+  videoEnabled: boolean;
+}
+
+export enum ParticipantState {
+  /**
+   * The state when the participant has entered room
+   */
+  ENTERED = 'entered',
+  /**
+   * The state when the participant has been connected.
+   */
+  CONNECTED = 'connected',
+  /**
+   * The state when the participant has exit room
+   */
+  EXITED = 'exited',
+}
+
+export interface Participant {
+  /**
+   * A unique identifier for a participant in a room.
+   */
+  participantId: string;
+
+  /**
+   * The timestamp of when the participant enters the room, in Unix milliseconds.
+   */
+  enteredAt: number;
+
+  /**
+   * The timestamp of when the participant information was updated within the room, in Unix milliseconds.
+   */
+  updatedAt: number;
+
+  /**
+   * The timestamp of when the participant exited the room, in Unix milliseconds.
+   */
+  exitedAt?: number;
+
+  /**
+   * The period from the time when the participant entered the room to the time the participant left the room, measured in seconds.
+   */
+  duration?: number;
+
+  /**
+   * The state of the participant. Valid values are entered, exited, and connected.
+   */
+  state: ParticipantState;
+
+  /**
+   * Indicates a user in Calls who corresponds to the participant.
+   */
+  user: User;
+
+  /**
+   * Indicates whether the participant has enabled their audio.
+   */
+  isAudioEnabled: boolean;
+
+  /**
+   * Indicates whether the participant has enabled their video.
+   */
+  isVideoEnabled: boolean;
+
+  setMediaView(mediaView: HTMLMediaElement): Promise<void>;
+}
+
+export interface LocalParticipant extends Participant {
+  readonly isLocalParticipant: true;
+
+  /**
+   * Alias for setMediaView
+   */
+  setLocalMediaView(mediaView: HTMLMediaElement): Promise<void>;
+
+  /**
+   * Stop the local audio.
+   */
+  muteMicrophone(): void;
+  /**
+   * Start the local audio.
+   */
+  unmuteMicrophone(): void;
+
+  /**
+   * Start the local video.
+   */
+  stopVideo(): void;
+
+  /**
+   * Stop the local video.
+   */
+  startVideo(): void;
+
+}
+
+export interface RemoteParticipant extends Participant {
+  readonly isLocalParticipant: false;
+}
