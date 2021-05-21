@@ -1,5 +1,12 @@
 # Change Log
 
+### 1.6.1 (May 21, 2021 UTC)
+* Bug fix
+    * Fixed the error and undefined behavior in recording feature.
+        * Now, `DirectCall.startRecording()` produces `.webm` file in Chrome and Firefox, `.mp4` file in Safari.
+    * Fixed the noise when calling `addDirectCallSound()`.
+    * Fixed the bug that sometimes the error message of `authenticate()` is blank.
+
 ### 1.6.0 (April 22, 2021 UTC)
 * Added support for group call.
     * Below class is added in `SendBirdCall`
