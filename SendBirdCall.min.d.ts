@@ -1,8 +1,8 @@
-/** 1.6.1 */
+/** 1.7.0 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
-export function init(appId: string): void;
+export function init(appId: string, apiHost?: string, websocketHost?: string): void;
 export function authenticate(authOption: AuthOption, handler?: AuthHandler): Promise<User>;
 export function deauthenticate(): void;
 export function connectWebSocket(): Promise<void>;
@@ -39,6 +39,7 @@ export function getCall(callId: string): DirectCall;
 export function createRoom(params: RoomParams): Promise<Room>;
 export function getCachedRoomById(roomId: string): Room;
 export function fetchRoomById(roomId: string): Promise<Room>;
+export function createRoomListQuery(params: RoomListQueryParams): RoomListQuery;
 export const sdkVersion: string;
 export const appId: string;
 export const currentUser: User;
@@ -363,10 +364,28 @@ export interface User {
   readonly isActive: string;
 }
 
+export interface RoomListQuery {
+  prev(): Promise<Room[]>;
+  next(): Promise<Room[]>;
+  readonly isLoading: boolean;
+  readonly hasPrev: boolean;
+  readonly hasNext: boolean;
+}
+
 export interface DirectCallLogListQueryParams {
   myRole?: DirectCallUserRole;
   endResults?: DirectCallEndResult[];
   limit?: number;
+}
+
+export interface RoomListQueryParams {
+  type?: RoomType | 'all'
+  limit?: number;
+  state?: RoomState;
+  currentParticipantCount?: [number | undefined, number | undefined];
+  createdByUserIds?: string[]
+  roomIds?: string[]
+  createdAt?: [number | undefined, number | undefined];
 }
 
 export interface CustomItems {
@@ -473,12 +492,28 @@ export enum RoomType {
   SMALL_ROOM_FOR_VIDEO = 'small_room_for_video',
 }
 
+export enum RoomState {
+  /**
+   * Indicates a room is open and available for group calls.
+   */
+  OPEN = 'open',
+  /**
+   * Indicates a room is deleted.
+   */
+  DELETED = 'deleted',
+}
+
 export declare class Room extends EventTarget<RoomEventMap> {
 
   /**
    * The ID of room
    */
   readonly roomId: string;
+
+  /**
+   * The state of room
+   */
+  readonly state: RoomState;
 
   /**
    * Room type

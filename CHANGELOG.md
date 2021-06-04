@@ -1,5 +1,19 @@
 # Change Log
 
+# 1.7.0 (June 4, 2021 UTC)
+* Added capability to query rooms.
+    * Below interfaces are added in `SendBirdCall`
+        * `RoomListQuery`
+        * `RoomListQueryParams`
+    * Below methods are added in `SendBirdCall`
+        * `createRoomListQuery(params: RoomListQueryParams): RoomListQuery`
+* Added support for customized host URL
+    * Now, you can customize API/WebSocket host URL when `init()`.
+    * Below method is changed in `SendBirdCall`
+        * `init(appId: string, apiHost?: string, websocketHost?: string): void`
+* Improved security.
+* Improved stability.
+
 ### 1.6.1 (May 21, 2021 UTC)
 * Bug fix
     * Fixed the error and undefined behavior in recording feature.
