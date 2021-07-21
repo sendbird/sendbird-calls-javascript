@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.7.1 (July 21, 2021 UTC)
+* Bug fix
+    * Fixed the bug that `audioEnabled` and `videoEnabled` in `DirectCallOption` doesn't work.
+
 ### 1.7.0 (June 4, 2021 UTC)
 * Added capability to query rooms.
     * Below interfaces are added in `SendBirdCall`
