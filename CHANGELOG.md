@@ -1,5 +1,14 @@
 # Change Log
 
+### 1.7.2 (October 8, 2021 UTC)
+* Added push token registration APIs
+    * Below methods are added in `SendBirdCall`
+        * `registerPushToken(pushToken: string, tokenType: TokenType): Promise<void>`
+        * `unregisterPushToken(pushToken: string, tokenType: TokenType): Promise<void>`
+        * `unregisterAllPushTokens(tokenType: TokenType): Promise<void>`
+    * Below enum is added in `SendBirdCall`
+        * `TokenType`
+
 ### 1.7.1 (July 21, 2021 UTC)
 * Bug fix
     * Fixed the bug that `audioEnabled` and `videoEnabled` in `DirectCallOption` doesn't work.

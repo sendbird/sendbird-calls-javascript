@@ -1,4 +1,4 @@
-/** 1.7.1 */
+/** 1.7.2 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -40,6 +40,9 @@ export function createRoom(params: RoomParams): Promise<Room>;
 export function getCachedRoomById(roomId: string): Room;
 export function fetchRoomById(roomId: string): Promise<Room>;
 export function createRoomListQuery(params: RoomListQueryParams): RoomListQuery;
+export function registerPushToken(pushToken: string, tokenType: TokenType);
+export function unregisterPushToken(pushToken: string, tokenType: TokenType);
+export function unregisterAllPushTokens(tokenType: TokenType);
 export const sdkVersion: string;
 export const appId: string;
 export const currentUser: User;
@@ -86,6 +89,11 @@ export enum DirectCallEndResult {
   DIAL_FAILED = 'dial_failed',
   ACCEPT_FAILED = 'accept_failed',
   UNKNOWN = 'unknown'
+}
+
+export enum TokenType {
+  APNS = 'apns_voip',
+  FCM = 'fcm_voip',
 }
 
 export enum ErrorCode {
