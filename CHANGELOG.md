@@ -1,5 +1,23 @@
 # Change Log
 
+### 1.8.0 (October 27, 2021 UTC)
+For 1.8.0, a new feature is released for both Group call and Direct call features respectively.
+For the Group call feature, you can now add and manage custom items to store additional information for a room.
+* Added custom items feature in Group Call
+    * Added `customItems` in `Room`.
+    * Added `customItems` in `RoomParams`.
+    * Added `updateCustomItems(customItems: CustomItems): Promise<CustomItemsResult>` and `deleteCustomItems(customItemKeys: string[]): Promise<CustomItemsResult>` in `Room`.
+    * Added `customItemsUpdated` and `customItemsDeleted` in `RoomEventMap`.
+For the Direct call feature, you can now hold and resume calls which allows you to accept an incoming call or switch between calls.
+* Added hold and resume feature in Direct Call
+    * Added `hold(): Promise<void>` and `unhold(force: boolean): Promise<void>` in `DirectCall`.
+    * Added `isOnHold` in `DirectCall`.
+    * Added `holdActiveCall` in `DialParams` and `AcceptParams`.
+    * Added `onUserHoldStatusChanged` in `DirectCall`.
+* Added `getOngoingCalls()` in `SendBirdCall` to retrieve a list of ongoing Direct Calls in the Calls SDK.
+* Added missing return type of push token registration APIs.
+* Improved stability.
+
 ### 1.7.2 (October 8, 2021 UTC)
 * Added push token registration APIs
     * Below methods are added in `SendBirdCall`

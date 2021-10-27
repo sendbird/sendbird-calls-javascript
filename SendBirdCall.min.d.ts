@@ -1,4 +1,4 @@
-/** 1.7.2 */
+/** 1.8.0 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -40,9 +40,9 @@ export function createRoom(params: RoomParams): Promise<Room>;
 export function getCachedRoomById(roomId: string): Room;
 export function fetchRoomById(roomId: string): Promise<Room>;
 export function createRoomListQuery(params: RoomListQueryParams): RoomListQuery;
-export function registerPushToken(pushToken: string, tokenType: TokenType);
-export function unregisterPushToken(pushToken: string, tokenType: TokenType);
-export function unregisterAllPushTokens(tokenType: TokenType);
+export function registerPushToken(pushToken: string, tokenType: TokenType): Promise<void>;
+export function unregisterPushToken(pushToken: string, tokenType: TokenType): Promise<void>;
+export function unregisterAllPushTokens(tokenType: TokenType): Promise<void>;
 export const sdkVersion: string;
 export const appId: string;
 export const currentUser: User;
@@ -53,10 +53,12 @@ export interface DialParams {
   callOption: DirectCallOption;
   customItems?: CustomItems;
   sendBirdChatOptions?: SendBirdChatOptions;
+  holdActiveCall?: boolean;
 }
 
 export interface AcceptParams {
   callOption: DirectCallOption;
+  holdActiveCall?: boolean;
 }
 
 export enum LoggerLevel {
@@ -248,6 +250,7 @@ export interface DirectCall {
   onCustomItemsUpdated: ((call: DirectCall, updatedKeys: string[]) => void) | null;
   onCustomItemsDeleted: ((call: DirectCall, deletedKeys: string[]) => void) | null;
   onRemoteRecordingStatusChanged: ((call: DirectCall) => void) | null;
+  onUserHoldStatusChanged: ((call: DirectCall, isLocalUser: boolean, isUserOnHold: boolean) => void) | null;
   onEnded: ((call: DirectCall) => void) | null;
 
   onScreenShareStopped: (() => void) | null;
@@ -264,6 +267,7 @@ export interface DirectCall {
   readonly isRemoteVideoEnabled: boolean;
   readonly myRole: DirectCallUserRole;
   readonly isOngoing: boolean;
+  readonly isOnHold: boolean;
   readonly endedBy: DirectCallUser;
   readonly isEnded: boolean;
   readonly endResult: DirectCallEndResult;
@@ -287,6 +291,9 @@ export interface DirectCall {
 
   muteMicrophone(): void;
   unmuteMicrophone(): void;
+
+  hold(): Promise<void>;
+  unhold(force: boolean): Promise<void>;
 
   captureLocalVideoView(callback?: CaptureVideoViewHandler): Promise<CaptureVideoViewResult>;
   captureRemoteVideoView(callback?: CaptureVideoViewHandler): Promise<CaptureVideoViewResult>;
@@ -567,6 +574,21 @@ export declare class Room extends EventTarget<RoomEventMap> {
    * Sets audio for a large room
    */
   setAudioForLargeRoom(mediaView: HTMLAudioElement): Promise<void>;
+
+  /**
+   * Fetch custom items
+   */
+  fetchCustomItems(): Promise<CustomItemsResult>;
+
+  /**
+   * Update custom items
+   */
+  updateCustomItems(customItems: CustomItems): Promise<CustomItemsResult>;
+
+  /**
+   * Delete custom items
+   */
+  deleteCustomItems(customItemKeys: string[]): Promise<CustomItemsResult>;
 
 }
 
