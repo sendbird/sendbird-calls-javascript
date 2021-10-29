@@ -605,7 +605,7 @@ The `SendBirdCall` object contains a collection of methods used to configure med
 |selectAudioOutputDevice(mediaDeviceInfo) | Select the audio output device to use|
 |getCurrentVideoInputDevice() | Get the current video input device |
 |getAvailableVideoInputDevices() | Get a list of available video input devices|
-|selectVideoInputDevice(mediaDeviceInfo) | Get the current video input device |
+|selectVideoInputDevice(mediaDeviceInfo) | Select the video input device to use |
 |updateMediaDevices(constraints) | Manually update media devices |
 
 The device specific-event handler also contains a collection of event listeners used to handle changes in media devices.
