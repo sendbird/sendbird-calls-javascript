@@ -1,4 +1,4 @@
-/** 1.8.0 */
+/** 1.8.1 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -29,6 +29,7 @@ export function updateCustomItems(callId: string, customItems: CustomItems, call
 export function deleteCustomItems(callId: string, customItemKeys: string[], callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function deleteAllCustomItems(callId: string, callback?: CustomItemsHandler): Promise<CustomItemsResult>;
 export function setLoggerLevel(level: LoggerLevel): LoggerLevel;
+export function getOngoingCalls(): DirectCall[];
 export function getOngoingCallCount(): number;
 export function setRingingTimeout(timeout: number): void;
 export function setCallConnectionTimeout(timeout: number): void;
@@ -472,6 +473,8 @@ declare type RoomEventMap = {
   remoteParticipantStreamStarted: { args: [RemoteParticipant]; };
   remoteAudioSettingsChanged: { args: [RemoteParticipant]; };
   remoteVideoSettingsChanged: { args: [RemoteParticipant]; };
+  customItemsUpdated: { args: [CustomItems, string[]] };
+  customItemsDeleted: { args: [CustomItems, string[]] };
   error: { args: [Error, Participant?] };
 };
 
@@ -529,6 +532,11 @@ export declare class Room extends EventTarget<RoomEventMap> {
    * The state of room
    */
   readonly state: RoomState;
+
+  /**
+   * The customItems of room
+   */
+  customItems: CustomItems;
 
   /**
    * Room type
@@ -597,6 +605,10 @@ export type RoomParams = {
    * An enum that represents different types of a room.
    */
   roomType: RoomType;
+  /**
+   * The custom items of room
+   */
+  customItems?: CustomItems;
 }
 
 /**
