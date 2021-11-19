@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.8.2 (November 19, 2021 UTC)
+* Bug fix
+    * Fixed the unexpected error when joining room in which there are more than two participants.
+
 ### 1.8.1 (November 1, 2021 UTC)
 * Bug fix
     * Fixed the bug that the permission dosen't be revoked after `Room.exit()`.
