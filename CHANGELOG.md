@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.9.0 (December 9, 2021 UTC)
+For 1.9.0, a feature to delete a room in Group call is released.
+* Added `deleted` in `RoomEventMap` which is invoked when the room has been deleted by the Platform API.
+
 ### 1.8.2 (November 19, 2021 UTC)
 * Bug fix
     * Fixed the unexpected error when joining room in which there are more than two participants.

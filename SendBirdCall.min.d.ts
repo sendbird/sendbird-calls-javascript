@@ -1,4 +1,4 @@
-/** 1.8.2 */
+/** 1.9.0 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -475,6 +475,7 @@ declare type RoomEventMap = {
   remoteVideoSettingsChanged: { args: [RemoteParticipant]; };
   customItemsUpdated: { args: [CustomItems, string[]] };
   customItemsDeleted: { args: [CustomItems, string[]] };
+  deleted: {};
   error: { args: [Error, Participant?] };
 };
 
