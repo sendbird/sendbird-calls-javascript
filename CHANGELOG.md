@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.9.1 (February 17, 2022 UTC)
+* Bug fix
+    * Fixed the bug that `selectAudioOutputDevice(mediaDeviceInfo: MediaDeviceInfo): void` doens't work in group call.
+
 ### 1.9.0 (December 9, 2021 UTC)
 For 1.9.0, a feature to delete a room in Group call is released.
 * Added `deleted` in `RoomEventMap` which is invoked when the room has been deleted by the Platform API.
