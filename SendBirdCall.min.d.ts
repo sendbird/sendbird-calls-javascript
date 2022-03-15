@@ -36,7 +36,7 @@ export function setCallConnectionTimeout(timeout: number): void;
 export function handleWebhookData(data: WebhookData): void;
 export function addDirectCallSound(type: SoundType, url: string): Promise<boolean>;
 export function removeDirectCallSound(type: SoundType): boolean;
-export function getCall(callId: string): DirectCall;
+export function getCall(callId: string): Promise<DirectCall>;
 export function createRoom(params: RoomParams): Promise<Room>;
 export function getCachedRoomById(roomId: string): Room;
 export function fetchRoomById(roomId: string): Promise<Room>;
