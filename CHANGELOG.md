@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.9.2 (April 8, 2022 UTC)
+* Bug fix
+    * Fixed the bug that group call breaks in chrome v100.
+
 ### 1.9.1 (February 17, 2022 UTC)
 * Bug fix
     * Fixed the bug that `selectAudioOutputDevice(mediaDeviceInfo: MediaDeviceInfo): void` doens't work in group call.
