@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.9.3 (April 11, 2022 UTC)
+* Bug fix
+    * Fixed the unexpected error when joining the room that the user exited before.
+
 ### 1.9.2 (April 8, 2022 UTC)
 * Bug fix
     * Fixed the bug that group call breaks in chrome v100.
