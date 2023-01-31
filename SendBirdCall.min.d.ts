@@ -1,4 +1,4 @@
-/** 1.9.3 */
+/** 1.10.0 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -175,6 +175,7 @@ export interface SendBirdCallListener {
   onAudioInputDeviceChanged?: ((currentAudioInputDevice: InputDeviceInfo, availableAudioInputDevices: InputDeviceInfo[]) => void) | null;
   onAudioOutputDeviceChanged?: ((currentAudioOutputDevice: MediaDeviceInfo, availableAudioOutputDevices: MediaDeviceInfo[]) => void) | null;
   onVideoInputDeviceChanged?: ((currentVideoInputDevice: InputDeviceInfo, availableVideoInputDevices: InputDeviceInfo[]) => void) | null;
+  onInvitationReceived?: ((invitation: RoomInvitation) => void) | null;
 }
 
 export interface SendBirdCallRecordingListener {
@@ -467,14 +468,28 @@ export interface WebhookData {
  * Room
  */
 
+export interface RoomInvitation {
+  room: Room;
+  inviter: User;
+  invitee: User;
+
+  accept(): Promise<void>;
+  decline(): Promise<void>;
+  cancel(): Promise<void>;
+}
+
 declare type RoomEventMap = {
   remoteParticipantEntered: { args: [RemoteParticipant]; };
+  remoteParticipantConnected: { args: [RemoteParticipant]; };
   remoteParticipantExited: { args: [RemoteParticipant]; };
   remoteParticipantStreamStarted: { args: [RemoteParticipant]; };
   remoteAudioSettingsChanged: { args: [RemoteParticipant]; };
   remoteVideoSettingsChanged: { args: [RemoteParticipant]; };
   customItemsUpdated: { args: [CustomItems, string[]] };
   customItemsDeleted: { args: [CustomItems, string[]] };
+  invitationDeclined: { args: [RoomInvitation] };
+  invitationAccepted: { args: [RoomInvitation] };
+  invitationCanceled: { args: [RoomInvitation]}
   deleted: {};
   error: { args: [Error, Participant?] };
 };
@@ -598,6 +613,16 @@ export declare class Room extends EventTarget<RoomEventMap> {
    * Delete custom items
    */
   deleteCustomItems(customItemKeys: string[]): Promise<CustomItemsResult>;
+
+  /**
+   * Send invitation
+   */
+  sendInvitation(invitee: string): Promise<RoomInvitation>;
+
+  /**
+   * delete a room
+   */
+  delete(): Promise<void>;
 
 }
 

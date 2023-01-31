@@ -1,5 +1,14 @@
 # Change Log
 
+### 1.10.0 (Jan 31, 2023 UTC)
+* Added a feature to invite users to enter a room.
+    * Added `Room.sendInvitation(invitee: string): Promise<RoomInvitation>`.
+    * Added `RoomInvitation` class to manage invitation.
+    * Added `RoomInvitation.accept(): Promise<void>`, `RoomInvitation.decline(): Promise<void>`, `RoomInvitation.cancel(): Promise<void>`.
+    * Added `invitationAccepted`, `invitationDeclined`, `invitationCanceled` in `RoomEventMap`.
+* Added a new interface to delete a room.
+    * Added `Room.delete()`.
+
 ### 1.9.3 (April 11, 2022 UTC)
 * Bug fix
     * Fixed the unexpected error when joining the room that the user exited before.
