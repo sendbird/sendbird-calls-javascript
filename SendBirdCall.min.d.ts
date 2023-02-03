@@ -1,4 +1,4 @@
-/** 1.10.0 */
+/** 1.10.1 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 

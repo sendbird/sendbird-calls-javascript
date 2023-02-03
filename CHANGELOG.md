@@ -1,5 +1,8 @@
 # Change Log
 
+### 1.10.1 (Feb 3, 2023 UTC)
+* Improved stability.
+
 ### 1.10.0 (Jan 31, 2023 UTC)
 * Added a feature to invite users to enter a room.
     * Added `Room.sendInvitation(invitee: string): Promise<RoomInvitation>`.
