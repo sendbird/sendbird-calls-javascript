@@ -1,9 +1,9 @@
 # Change Log
 
 ### 1.10.1 (Feb 3, 2023 UTC)
-* Fixed the bug that the clinet with only one of audio/video permission can't use the allowed device in video call/room.
-    * Now, the client can use microphone in video call/room regardless of camera permission.
-    * Likewise, the client can use camera in video call/room regardless of microphone permission.
+* Fixed the bug that the client with only one of audio/video permission can't use the allowed device in video call/room.
+    * Now, the client can use the microphone in video call/room regardless of camera permission.
+    * Likewise, the client can use the camera in video call/room regardless of microphone permission.
 * Improved stability.
 
 ### 1.10.0 (Jan 31, 2023 UTC)
