@@ -1,5 +1,10 @@
 # Change Log
 
+### 1.10.2 (Feb 14, 2023 UTC)
+* Added room event listeners to detect local user’s connection with the server.
+    * Added `localParticipantDisconnected`, `localParticipantReconnected` in `RoomEventMap`.
+* Improved the reconnection logic for short-term disconnection in `Room`.
+
 ### 1.10.1 (Feb 3, 2023 UTC)
 * Fixed the bug that the client with only one of audio/video permission can't use the allowed device in video call/room.
     * Now, the client can use the microphone in video call/room regardless of camera permission.
