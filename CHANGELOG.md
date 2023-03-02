@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.10.3 (Mar 2, 2023 UTC)
+* Fixed an error in `SendbirdCall.connectWebSocket()`.
+* Removed the unexpected console logs.
+
 ### 1.10.2 (Feb 14, 2023 UTC)
 * Added room event listeners to detect local user’s connection with the server.
     * Added `localParticipantDisconnected`, `localParticipantReconnected` in `RoomEventMap`.
