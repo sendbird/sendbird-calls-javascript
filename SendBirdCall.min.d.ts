@@ -1,4 +1,4 @@
-/** 1.10.3 */
+/** 1.10.4 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -651,6 +651,10 @@ export interface EnterParams {
    * Enables a participant's video settings when entering a room.
    */
   videoEnabled: boolean;
+  /**
+   * Kicks out any participants in the room who have the same user id as the user entering the room.
+   */
+  kickSiblings?: boolean;
 }
 
 export enum ParticipantState {

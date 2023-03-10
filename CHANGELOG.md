@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.10.4 (Mar 10, 2023 UTC)
+* Added a feature to kick other participants in a room with the same user id as the current user.
+    * Added `kickSiblings` in `EnterParams`.
+
 ### 1.10.3 (Mar 2, 2023 UTC)
 * Fixed an error in `SendbirdCall.connectWebSocket()`.
 * Removed the unexpected console logs.
