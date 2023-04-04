@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.10.5 (May 4, 2023 UTC)
+* Fixed the bug that User.metaData is always undefined.
+* Fixed `self is not defined` error in node environment.
+
 ### 1.10.4 (Mar 10, 2023 UTC)
 * Added a feature to kick other participants in a room with the same user id as the current user.
     * Added `kickSiblings` in `EnterParams`.
