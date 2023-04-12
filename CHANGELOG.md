@@ -1,5 +1,12 @@
 # Change Log
 
+### 1.10.6 (Apr 12, 2023 UTC)
+- Added a feature to detect connection qualities in ongoing Direct Calls.
+    - Added `ConnectionQualityState`.
+    - Added `ConnectionQualityMonitoringMode`.
+    - Added `ConnectionMetrics`.
+    - Added `setConnectionQualityListener(mode: ConnectionQualityMonitoringMode, listener: (metrics: ConnectionMetrics) => void): void`, `removeConnectionQualityListener(): void` in `DirectCall`;
+
 ### 1.10.5 (Apr 4, 2023 UTC)
 * Fixed the bug that User.metaData is always undefined.
 * Fixed `self is not defined` error in node environment.

@@ -1,4 +1,4 @@
-/** 1.10.5 */
+/** 1.10.6 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -170,6 +170,27 @@ export enum ErrorCode {
 
 }
 
+export enum ConnectionQualityState {
+  POOR = 'poor',
+  FAIR = 'fair',
+  AVERAGE = 'average',
+  GOOD = 'good',
+  EXCELLENT = 'excellent',
+}
+
+export enum ConnectionQualityMonitoringMode {
+  FREQUENCY = 'frequency',
+  CONNECTION_QUALITY_CHANGE = 'connectionQualityChange',
+}
+
+export interface ConnectionMetrics {
+  mos: number;
+  packetsLostRate: number;
+  rtt: number;
+  jitter: number;
+  connectionQuality: ConnectionQualityState;
+}
+
 export interface SendBirdCallListener {
   onRinging?: ((directCall: DirectCall) => void) | null;
   onAudioInputDeviceChanged?: ((currentAudioInputDevice: InputDeviceInfo, availableAudioInputDevices: InputDeviceInfo[]) => void) | null;
@@ -309,6 +330,9 @@ export interface DirectCall {
 
   startScreenShare(): Promise<void>;
   stopScreenShare(): void;
+
+  setConnectionQualityListener(mode: ConnectionQualityMonitoringMode, listener: (metrics: ConnectionMetrics) => void): void;
+  removeConnectionQualityListener(): void;
 }
 
 export interface DirectCallOption {
