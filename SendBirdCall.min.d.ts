@@ -1,4 +1,4 @@
-/** 1.10.6 */
+/** 1.10.7 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -171,6 +171,7 @@ export enum ErrorCode {
 }
 
 export enum ConnectionQualityState {
+  UNAVAILABLE = 'unavailable',
   POOR = 'poor',
   FAIR = 'fair',
   AVERAGE = 'average',
@@ -184,10 +185,10 @@ export enum ConnectionQualityMonitoringMode {
 }
 
 export interface ConnectionMetrics {
-  mos: number;
-  packetsLostRate: number;
-  rtt: number;
-  jitter: number;
+  mos?: number;
+  packetsLostRate?: number;
+  rtt?: number;
+  jitter?: number;
   connectionQuality: ConnectionQualityState;
 }
 
