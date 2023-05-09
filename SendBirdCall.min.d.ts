@@ -1,4 +1,4 @@
-/** 1.10.7 */
+/** 1.10.8 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -202,7 +202,7 @@ export interface SendBirdCallListener {
 
 export interface SendBirdCallRecordingListener {
   onRecordingSucceeded: ((callId: string, recordingId: string, options: DirectCallRecordOption, fileName?: string) => void) | null;
-  onRecordingFailed: ((callId: string, recordingId: string, error) => void) | null;
+  onRecordingFailed: ((callId: string, recordingId: string, error: Error) => void) | null;
 }
 
 /**
@@ -210,7 +210,7 @@ export interface SendBirdCallRecordingListener {
  */
 
 interface Event {
-  readonly args?: any[];
+  readonly args: any[];
 }
 
 declare type nullish = null | undefined;
