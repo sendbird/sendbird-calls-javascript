@@ -1,9 +1,9 @@
 # Change Log
 
-### 1.10.9 (May 6, 2023 UTC)
+### 1.10.9 (May 10, 2023 UTC)
 * Fixed the type error in the declaration file.
 
-### 1.10.8 (May 5, 2023 UTC)
+### 1.10.8 (May 9, 2023 UTC)
 * Added the missing export of `RoomState` enum.
 * Fixed the type error in the declaration file.
 * Changed the return type of `RoomListQuery.next()`, `RoomListQuery.prev()` to the actual `Room` instance, rather than the data object.
