@@ -1,5 +1,8 @@
 # Change Log
 
+### 1.10.9 (May 6, 2023 UTC)
+* Fixed the type error in the declaration file.
+
 ### 1.10.8 (May 5, 2023 UTC)
 * Added the missing export of `RoomState` enum.
 * Fixed the type error in the declaration file.
