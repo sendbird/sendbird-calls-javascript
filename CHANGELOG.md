@@ -1,5 +1,8 @@
 # Change Log
 
+### 1.10.10 (Jun 16, 2023)
+* Added `DirectCall.onCalleeDialReceived` event listener to notify the caller when the callee has received the call. This listener will be called when the callee has received the `SendBirdCallListener.onRinging` event.
+
 ### 1.10.9 (May 10, 2023 UTC)
 * Fixed the type error in the declaration file.
 

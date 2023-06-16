@@ -1,4 +1,4 @@
-/** 1.10.9 */
+/** 1.10.10 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -274,6 +274,7 @@ export interface DirectCall {
   onCustomItemsUpdated: ((call: DirectCall, updatedKeys: string[]) => void) | null;
   onCustomItemsDeleted: ((call: DirectCall, deletedKeys: string[]) => void) | null;
   onRemoteRecordingStatusChanged: ((call: DirectCall) => void) | null;
+  onCalleeDialReceived: (call: DirectCall) => void | null;
   onUserHoldStatusChanged: ((call: DirectCall, isLocalUser: boolean, isUserOnHold: boolean) => void) | null;
   onEnded: ((call: DirectCall) => void) | null;
 
