@@ -1,6 +1,9 @@
 # Change Log
 
-### 1.10.10 (Jun 16, 2023)
+### 1.10.11 (Jul 31, 2023 UTC)
+* Added support for Direct Call quality monitoring in Sendbird Dashboard.
+
+### 1.10.10 (Jun 16, 2023 UTC)
 * Added `DirectCall.onCalleeDialReceived` event listener to notify the caller when the callee has received the call. This listener will be called when the callee has received the `SendBirdCallListener.onRinging` event.
 
 ### 1.10.9 (May 10, 2023 UTC)
