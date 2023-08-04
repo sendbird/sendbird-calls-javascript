@@ -1,5 +1,8 @@
 # Change Log
 
+### 1.10.13 (Aug 4, 2023 UTC)
+* Fixed an issue where CSP(Content Security Policy) error occurs if `script-src` is `self`.
+
 ### 1.10.12 (Aug 2, 2023 UTC)
 * Fix an issue where Direct Call's Connection Quality would report `UNAVAILABLE` for a few seconds after connecting the call.
 
