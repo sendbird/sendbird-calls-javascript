@@ -1,5 +1,8 @@
 # Change Log
 
+### 1.10.14 (Aug 17, 2023 UTC)
+* Fixed an issue where call will not be properly reconnected after network connection has been lost.
+
 ### 1.10.13 (Aug 4, 2023 UTC)
 * Fixed an issue where CSP(Content Security Policy) error occurs if `script-src` is `self`.
 
