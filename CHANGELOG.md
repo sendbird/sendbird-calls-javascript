@@ -1,4 +1,7 @@
 # Change Log
+### 1.10.15 (Sep 15, 2023 UTC)
+* Fixed a bug in the local recording that the output file contains a black screen in the bad network sometimes.
+* Fixed a bug in the local recording that the previous larger frame lasts when the resolution has been lowered in the bad network.
 
 ### 1.10.14 (Aug 17, 2023 UTC)
 * Fixed an issue where call will not be properly reconnected after network connection has been lost.
