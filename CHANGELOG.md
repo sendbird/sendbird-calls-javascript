@@ -1,4 +1,7 @@
 # Change Log
+### 1.10.16 (Dec 15, 2023 UTC)
+* Added `DirectCallEndResult.NOT_CONNECTED`. When a direct call is ended before connecting, the call will have an end result of `DirectCallEndResult.NOT_CONNECTED`.
+
 ### 1.10.15 (Sep 15, 2023 UTC)
 * Fixed a bug in the local recording that the output file contains a black screen in the bad network sometimes.
 * Fixed a bug in the local recording that the previous larger frame lasts when the resolution has been lowered in the bad network.

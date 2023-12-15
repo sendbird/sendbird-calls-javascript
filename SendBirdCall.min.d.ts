@@ -1,4 +1,4 @@
-/** 1.10.15 */
+/** 1.10.16 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -91,6 +91,7 @@ export enum DirectCallEndResult {
   TIMED_OUT = 'timed_out',
   DIAL_FAILED = 'dial_failed',
   ACCEPT_FAILED = 'accept_failed',
+  NOT_CONNECTED = 'not_connected',
   UNKNOWN = 'unknown'
 }
 
