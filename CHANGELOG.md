@@ -1,4 +1,7 @@
 # Change Log
+### 1.10.17 (Feb 21, 2024 UTC)
+* Added `webhook` property in `DialParams`.
+
 ### 1.10.16 (Dec 15, 2023 UTC)
 * Added `DirectCallEndResult.NOT_CONNECTED`. When a direct call is ended before connecting, the call will have an end result of `DirectCallEndResult.NOT_CONNECTED`.
 
