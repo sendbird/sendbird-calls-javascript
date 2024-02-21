@@ -1,4 +1,4 @@
-/** 1.10.16 */
+/** 1.10.17 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -55,6 +55,7 @@ export interface DialParams {
   customItems?: CustomItems;
   sendBirdChatOptions?: SendBirdChatOptions;
   holdActiveCall?: boolean;
+  webhook?: Webhook;
 }
 
 export interface AcceptParams {
@@ -434,6 +435,12 @@ export interface RoomListQueryParams {
 
 export interface CustomItems {
   [key: string]: string;
+}
+
+export interface Webhook {
+  url: string;
+  enabledEvents: string[];
+  headers?: {[key: string]: string};
 }
 
 export interface SendBirdChatOptions {
