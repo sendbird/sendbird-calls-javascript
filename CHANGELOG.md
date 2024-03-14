@@ -1,4 +1,8 @@
 # Change Log
+### 1.10.18 (Mar 14, 2024 UTC)
+* Updated the WebRTC version
+* Improved WebRTC internal logging
+
 ### 1.10.17 (Feb 21, 2024 UTC)
 * Added `webhook` property in `DialParams`.
 
