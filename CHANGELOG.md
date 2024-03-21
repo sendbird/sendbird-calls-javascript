@@ -1,4 +1,7 @@
 # Change Log
+### 1.10.19 (Mar 21, 2024 UTC)
+* Fixed the crash of the previous version
+
 ### 1.10.18 (Mar 14, 2024 UTC)
 * Updated the WebRTC version
 * Improved WebRTC internal logging
