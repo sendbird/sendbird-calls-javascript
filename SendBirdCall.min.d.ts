@@ -1,4 +1,4 @@
-/** 1.10.19 */
+/** 1.10.20 */
 // eslint-disable-next-line no-undef,max-classes-per-file
 export as namespace SendBirdCall;
 
@@ -420,6 +420,8 @@ export interface RoomListQuery {
 export interface DirectCallLogListQueryParams {
   myRole?: DirectCallUserRole;
   endResults?: DirectCallEndResult[];
+  startedAt?: number;
+  endedAt?: number;
   limit?: number;
 }
 
