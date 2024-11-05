@@ -1,4 +1,9 @@
 # Change Log
+### 1.10.20 (Nov 5, 2024 UTC)
+* Fixed the bug that local stream become disabled when a user hold other direct call.
+* Added start_ts and end_ts to the DirectCallLogListQueryParams.
+
+
 ### 1.10.19 (Mar 21, 2024 UTC)
 * Fixed the crash of the previous version
 
