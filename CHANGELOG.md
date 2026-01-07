@@ -1,4 +1,7 @@
 # Change Log
+### 1.10.21 (Jan 7, 2026 UTC)
+* Fixed a bug where switching media devices did not replace the stream with a new one.
+
 ### 1.10.20 (Nov 5, 2024 UTC)
 * Fixed the bug that local stream become disabled when a user hold other direct call.
 * Added start_ts and end_ts to the DirectCallLogListQueryParams.
